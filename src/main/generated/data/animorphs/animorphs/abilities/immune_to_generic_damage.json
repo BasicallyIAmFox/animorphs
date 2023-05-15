@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_generic_damage",
+  "key": "animorphs.ability.animorphs.generic",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:generic",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

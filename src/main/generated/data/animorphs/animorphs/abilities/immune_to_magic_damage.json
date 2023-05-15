@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_magic_damage",
+  "key": "animorphs.ability.animorphs.magic",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:magic",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

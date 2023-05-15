@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_thrown_damage",
+  "key": "animorphs.ability.animorphs.thrown",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:thrown",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

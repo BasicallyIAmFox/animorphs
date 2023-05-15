@@ -1,0 +1,14 @@
+{
+  "color": 2039587,
+  "id": "animorphs:blindness_status_effect",
+  "key": "effect.minecraft.blindness",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "NEGATIVE"
+}

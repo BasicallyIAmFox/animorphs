@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_dragon_breath_damage",
+  "key": "animorphs.ability.animorphs.dragon_breath",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:dragon_breath",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_fall_damage",
+  "key": "animorphs.ability.animorphs.fall",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:fall",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

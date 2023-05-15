@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_mob_attack_no_aggro_damage",
+  "key": "animorphs.ability.animorphs.mob_attack_no_aggro",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:mob_attack_no_aggro",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

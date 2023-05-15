@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_sting_damage",
+  "key": "animorphs.ability.animorphs.sting",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:sting",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

@@ -1,0 +1,14 @@
+{
+  "color": 9740385,
+  "id": "animorphs:glowing_status_effect",
+  "key": "effect.minecraft.glowing",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "NEGATIVE"
+}

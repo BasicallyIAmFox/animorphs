@@ -1,0 +1,21 @@
+{
+  "abilities": [
+    "animorphs:beefly",
+    "animorphs:jump_boost",
+    "animorphs:negate_fall_damage",
+    "animorphs:soft_wings"
+  ],
+  "conditions": [
+    {
+      "decorator": {
+        "from": 0,
+        "id": "animorphs:during_time_ticks",
+        "to": 12999
+      }
+    }
+  ],
+  "id": "animorphs:bee",
+  "item": "animorphs:stinger_o_pollen",
+  "skin": "animorphs:transformations/bee",
+  "slim": "animorphs:transformations/bee_slim"
+}

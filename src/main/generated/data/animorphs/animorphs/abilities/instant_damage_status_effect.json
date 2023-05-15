@@ -1,0 +1,14 @@
+{
+  "color": 11101546,
+  "id": "animorphs:instant_damage_status_effect",
+  "key": "effect.minecraft.instant_damage",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "NEGATIVE"
+}

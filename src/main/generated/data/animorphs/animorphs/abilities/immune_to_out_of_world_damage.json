@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_out_of_world_damage",
+  "key": "animorphs.ability.animorphs.out_of_world",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:out_of_world",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

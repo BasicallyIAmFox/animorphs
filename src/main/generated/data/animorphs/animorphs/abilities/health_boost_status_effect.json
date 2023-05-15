@@ -1,0 +1,14 @@
+{
+  "color": 16284963,
+  "id": "animorphs:health_boost_status_effect",
+  "key": "effect.minecraft.health_boost",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

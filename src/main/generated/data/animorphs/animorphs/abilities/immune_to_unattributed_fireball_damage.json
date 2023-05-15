@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_unattributed_fireball_damage",
+  "key": "animorphs.ability.animorphs.unattributed_fireball",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:unattributed_fireball",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

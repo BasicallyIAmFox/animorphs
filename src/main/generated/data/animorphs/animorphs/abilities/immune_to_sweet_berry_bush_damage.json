@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_sweet_berry_bush_damage",
+  "key": "animorphs.ability.animorphs.sweet_berry_bush",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:sweet_berry_bush",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

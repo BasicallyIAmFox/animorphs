@@ -1,0 +1,14 @@
+{
+  "color": 10017472,
+  "id": "animorphs:water_breathing_status_effect",
+  "key": "effect.minecraft.water_breathing",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

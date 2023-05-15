@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_freeze_damage",
+  "key": "animorphs.ability.animorphs.freeze",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:freeze",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

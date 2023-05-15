@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_sonic_boom_damage",
+  "key": "animorphs.ability.animorphs.sonic_boom",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:sonic_boom",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

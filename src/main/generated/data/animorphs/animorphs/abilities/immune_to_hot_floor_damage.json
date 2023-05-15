@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_hot_floor_damage",
+  "key": "animorphs.ability.animorphs.hot_floor",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:hot_floor",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

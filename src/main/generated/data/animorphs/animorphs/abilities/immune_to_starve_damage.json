@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_starve_damage",
+  "key": "animorphs.ability.animorphs.starve",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:starve",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

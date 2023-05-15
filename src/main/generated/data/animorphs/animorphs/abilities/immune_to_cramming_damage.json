@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_cramming_damage",
+  "key": "animorphs.ability.animorphs.cramming",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:cramming",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

@@ -1,0 +1,14 @@
+{
+  "color": 16262179,
+  "id": "animorphs:saturation_status_effect",
+  "key": "effect.minecraft.saturation",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_falling_stalactite_damage",
+  "key": "animorphs.ability.animorphs.falling_stalactite",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:falling_stalactite",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

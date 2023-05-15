@@ -1,0 +1,14 @@
+{
+  "color": 2445989,
+  "id": "animorphs:absorption_status_effect",
+  "key": "effect.minecraft.absorption",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

@@ -1,0 +1,14 @@
+{
+  "color": 16750848,
+  "id": "animorphs:fire_resistance_status_effect",
+  "key": "effect.minecraft.fire_resistance",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

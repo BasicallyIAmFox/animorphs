@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_dry_out_damage",
+  "key": "animorphs.ability.animorphs.dry_out",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:dry_out",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

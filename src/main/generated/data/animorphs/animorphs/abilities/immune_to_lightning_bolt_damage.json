@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_lightning_bolt_damage",
+  "key": "animorphs.ability.animorphs.lightning_bolt",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:lightning_bolt",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

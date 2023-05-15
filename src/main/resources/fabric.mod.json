@@ -1,0 +1,47 @@
+{
+	"schemaVersion": 1,
+	"id": "animorphs",
+	"version": "${version}",
+	"name": "Animorphs",
+	"description": "The mod adds new unique type of items - Transformation Items.",
+	"authors": [
+		"BasicallyIAmFox"
+	],
+	"license": "MIT",
+	"icon": "assets/animorphs/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{
+				"value": "basicallyiamfox.ani.Animorphs",
+				"adapter": "kotlin"
+			}
+		],
+		"client": [
+			{
+				"value": "basicallyiamfox.ani.AnimorphsClmod",
+				"adapter": "kotlin"
+			}
+		],
+		"fabric-datagen": [
+			{
+				"value": "basicallyiamfox.ani.AnimorphsDataGenerator",
+				"adapter": "kotlin"
+			}
+		]
+	},
+	"mixins": [
+		"animorphs.mixins.json"
+	],
+	"accessWidener": "animorphs.accesswidener",
+	"depends": {
+		"fabricloader": ">=0.14.19",
+		"minecraft": "~1.19.4",
+		"java": ">=17",
+		"fabric-api": "*",
+		"fabric-language-kotlin": ">=1.8.21"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

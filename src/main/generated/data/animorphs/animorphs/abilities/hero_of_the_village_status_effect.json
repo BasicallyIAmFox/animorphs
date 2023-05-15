@@ -1,0 +1,14 @@
+{
+  "color": 4521796,
+  "id": "animorphs:hero_of_the_village_status_effect",
+  "key": "effect.minecraft.hero_of_the_village",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

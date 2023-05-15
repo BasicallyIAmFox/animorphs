@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_trident_damage",
+  "key": "animorphs.ability.animorphs.trident",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:trident",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

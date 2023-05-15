@@ -1,0 +1,14 @@
+{
+  "color": 2696993,
+  "id": "animorphs:darkness_status_effect",
+  "key": "effect.minecraft.darkness",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "NEGATIVE"
+}

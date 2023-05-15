@@ -1,0 +1,14 @@
+{
+  "color": 12624973,
+  "id": "animorphs:unluck_status_effect",
+  "key": "effect.minecraft.unluck",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "NEGATIVE"
+}

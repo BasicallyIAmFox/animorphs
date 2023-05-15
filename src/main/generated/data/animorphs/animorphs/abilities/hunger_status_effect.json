@@ -1,0 +1,14 @@
+{
+  "color": 5797459,
+  "id": "animorphs:hunger_status_effect",
+  "key": "effect.minecraft.hunger",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "NEGATIVE"
+}

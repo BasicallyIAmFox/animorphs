@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_drown_damage",
+  "key": "animorphs.ability.animorphs.drown",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:drown",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

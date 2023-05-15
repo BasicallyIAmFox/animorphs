@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_explosion_damage",
+  "key": "animorphs.ability.animorphs.explosion",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:explosion",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

@@ -1,0 +1,14 @@
+{
+  "color": 4738376,
+  "id": "animorphs:weakness_status_effect",
+  "key": "effect.minecraft.weakness",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "NEGATIVE"
+}

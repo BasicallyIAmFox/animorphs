@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_player_attack_damage",
+  "key": "animorphs.ability.animorphs.player_attack",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:player_attack",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

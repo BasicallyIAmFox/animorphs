@@ -1,0 +1,14 @@
+{
+  "color": 1950417,
+  "id": "animorphs:conduit_power_status_effect",
+  "key": "effect.minecraft.conduit_power",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

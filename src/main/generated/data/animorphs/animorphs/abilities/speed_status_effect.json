@@ -1,0 +1,14 @@
+{
+  "color": 3402751,
+  "id": "animorphs:speed_status_effect",
+  "key": "effect.minecraft.speed",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

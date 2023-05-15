@@ -1,0 +1,14 @@
+{
+  "color": 13565951,
+  "id": "animorphs:levitation_status_effect",
+  "key": "effect.minecraft.levitation",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "NEGATIVE"
+}

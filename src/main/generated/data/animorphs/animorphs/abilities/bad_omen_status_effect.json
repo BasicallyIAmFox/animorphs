@@ -1,0 +1,14 @@
+{
+  "color": 745784,
+  "id": "animorphs:bad_omen_status_effect",
+  "key": "effect.minecraft.bad_omen",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "NEGATIVE"
+}

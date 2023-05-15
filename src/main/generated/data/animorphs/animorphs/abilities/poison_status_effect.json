@@ -1,0 +1,14 @@
+{
+  "color": 8889187,
+  "id": "animorphs:poison_status_effect",
+  "key": "effect.minecraft.poison",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "NEGATIVE"
+}

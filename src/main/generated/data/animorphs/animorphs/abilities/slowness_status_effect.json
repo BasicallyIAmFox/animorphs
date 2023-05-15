@@ -1,0 +1,14 @@
+{
+  "color": 9154528,
+  "id": "animorphs:slowness_status_effect",
+  "key": "effect.minecraft.slowness",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "NEGATIVE"
+}

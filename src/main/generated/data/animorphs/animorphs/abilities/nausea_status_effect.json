@@ -1,0 +1,14 @@
+{
+  "color": 5578058,
+  "id": "animorphs:nausea_status_effect",
+  "key": "effect.minecraft.nausea",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "NEGATIVE"
+}

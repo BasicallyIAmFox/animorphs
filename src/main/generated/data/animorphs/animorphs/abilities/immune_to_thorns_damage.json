@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_thorns_damage",
+  "key": "animorphs.ability.animorphs.thorns",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:thorns",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

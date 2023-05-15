@@ -1,0 +1,14 @@
+{
+  "color": 16185078,
+  "id": "animorphs:invisibility_status_effect",
+  "key": "effect.minecraft.invisibility",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

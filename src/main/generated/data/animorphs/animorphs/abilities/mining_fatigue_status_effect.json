@@ -1,0 +1,14 @@
+{
+  "color": 4866583,
+  "id": "animorphs:mining_fatigue_status_effect",
+  "key": "effect.minecraft.mining_fatigue",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "NEGATIVE"
+}

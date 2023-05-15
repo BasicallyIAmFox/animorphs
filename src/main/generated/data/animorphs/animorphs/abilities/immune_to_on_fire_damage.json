@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_on_fire_damage",
+  "key": "animorphs.ability.animorphs.on_fire",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:on_fire",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

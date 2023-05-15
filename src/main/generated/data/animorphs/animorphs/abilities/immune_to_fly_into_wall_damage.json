@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_fly_into_wall_damage",
+  "key": "animorphs.ability.animorphs.fly_into_wall",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:fly_into_wall",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

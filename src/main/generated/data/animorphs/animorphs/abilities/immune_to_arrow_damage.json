@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_arrow_damage",
+  "key": "animorphs.ability.animorphs.arrow",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:arrow",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

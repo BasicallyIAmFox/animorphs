@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_wither_damage",
+  "key": "animorphs.ability.animorphs.wither",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:wither",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

@@ -1,0 +1,14 @@
+{
+  "color": 13458603,
+  "id": "animorphs:regeneration_status_effect",
+  "key": "effect.minecraft.regeneration",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

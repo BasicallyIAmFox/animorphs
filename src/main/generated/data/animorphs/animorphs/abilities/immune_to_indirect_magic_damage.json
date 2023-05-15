@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_indirect_magic_damage",
+  "key": "animorphs.ability.animorphs.indirect_magic",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:indirect_magic",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

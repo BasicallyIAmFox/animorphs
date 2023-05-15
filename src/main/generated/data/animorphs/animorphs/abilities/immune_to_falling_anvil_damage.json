@@ -1,0 +1,14 @@
+{
+  "color": -3613441,
+  "id": "animorphs:immune_to_falling_anvil_damage",
+  "key": "animorphs.ability.animorphs.falling_anvil",
+  "rules": [
+    {
+      "decorator": {
+        "damageType": "minecraft:falling_anvil",
+        "id": "animorphs:immune_damage_type"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

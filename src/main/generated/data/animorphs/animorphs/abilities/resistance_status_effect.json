@@ -1,0 +1,14 @@
+{
+  "color": 9520880,
+  "id": "animorphs:resistance_status_effect",
+  "key": "effect.minecraft.resistance",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

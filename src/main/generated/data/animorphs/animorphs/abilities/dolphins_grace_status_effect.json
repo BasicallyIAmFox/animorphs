@@ -1,0 +1,14 @@
+{
+  "color": 8954814,
+  "id": "animorphs:dolphins_grace_status_effect",
+  "key": "effect.minecraft.dolphins_grace",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}

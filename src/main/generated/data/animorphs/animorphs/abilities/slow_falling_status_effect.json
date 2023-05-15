@@ -1,0 +1,14 @@
+{
+  "color": 16773073,
+  "id": "animorphs:slow_falling_status_effect",
+  "key": "effect.minecraft.slow_falling",
+  "rules": [
+    {
+      "decorator": {
+        "effect": "minecraft:jump_boost",
+        "id": "animorphs:status_effect"
+      }
+    }
+  ],
+  "sign": "POSITIVE"
+}
