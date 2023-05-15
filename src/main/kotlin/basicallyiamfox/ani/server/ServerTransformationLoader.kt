@@ -40,6 +40,8 @@ class ServerTransformationLoader : JsonDataLoader(GSON, "animorphs/transformatio
 
         this.manager = TransformationManager()
         this.manager!!.load(transformationMap)
+
+        LOGGER.info("Loaded ${transformationMap.count()} transformations")
     }
 
     fun get(): Iterable<Transformation>? {

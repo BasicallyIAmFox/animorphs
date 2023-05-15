@@ -42,7 +42,7 @@ class ConditionDecorators {
                 }
             ) { }
 
-        private val statusEffect = register(
+        private val inDimension = register(
             Identifier("animorphs:in_dimension"),
             commonObj<InDimensionConditionDecorator>(),
             commonObj2()

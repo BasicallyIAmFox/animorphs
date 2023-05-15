@@ -1,7 +1,7 @@
 {
   "color": -3613441,
   "id": "animorphs:immune_to_player_explosion_damage",
-  "key": "animorphs.ability.animorphs.player_explosion",
+  "key": "animorphs.ability.animorphs.name.immune_to_player_explosion_damage",
   "rules": [
     {
       "decorator": {

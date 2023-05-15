@@ -1,7 +1,7 @@
 {
   "color": -3613441,
   "id": "animorphs:immune_to_dragon_breath_damage",
-  "key": "animorphs.ability.animorphs.dragon_breath",
+  "key": "animorphs.ability.animorphs.name.immune_to_dragon_breath_damage",
   "rules": [
     {
       "decorator": {

@@ -48,30 +48,33 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
         }
     }
     class LangGenerator(output: FabricDataOutput) : FabricLanguageProvider(output, "en_us") {
-        private lateinit var translationBuilder: TranslationBuilder
-
         override fun generateTranslations(translationBuilder: TranslationBuilder?) {
-            this.translationBuilder = translationBuilder!!
-
-            translationBuilder.add(AnimorphsItems.STINGER_O_POLLEN, "Stinger o' Pollen")
+            translationBuilder!!.add(AnimorphsItems.STINGER_O_POLLEN, "Stinger o' Pollen")
             translationBuilder.add(AnimorphsItems.MAGMA_JELLY, "Magma Jelly")
 
-            addAbility("beefly", "Beefly")
-            addAbility("magmatic_jump", "Magmatic jump")
-            addAbility("soft_wings", "Soft Wings")
-            addAbility("wet_obsidian", "Wet Obsidian")
+            translationBuilder.addAbility(Identifier("animorphs:beefly"), "Beefly")
+            translationBuilder.addAbilityDesc(Identifier("animorphs:beefly"), "Allows to fly while holding [SPACE] button.")
+            translationBuilder.addAbility(Identifier("animorphs:soft_wings"), "Soft Wings")
+            translationBuilder.addAbilityDesc(Identifier("animorphs:soft_wings"), "You drown much faster.")
+            translationBuilder.addAbility(Identifier("animorphs:magmatic_jump"), "Magmatic Jump")
+            translationBuilder.addAbilityDesc(Identifier("animorphs:magmatic_jump"), "Holding [SHIFT] long enough will allow to jump high.")
+            translationBuilder.addAbility(Identifier("animorphs:wet_obsidian"), "Wet Obsidian")
+            translationBuilder.addAbilityDesc(Identifier("animorphs:wet_obsidian"), "You take damage from touching water.")
 
-            addAbility("negates_fall_damage", "Negates fall damage")
-        }
+            translationBuilder.addAbility(Identifier("animorphs:immune_to_fall_damage"), "Negates fall damage")
 
-        private fun addAbility(key: String, text: String) {
-            translationBuilder.add("animorphs.ability.animorphs.$key", text)
+            translationBuilder.add("animorphs.tooltip.animorphs.hold_shift_to_show", "Hold [SHIFT] to show abilities.")
+            translationBuilder.add("animorphs.tooltip.animorphs.is_visual_active", "Is Visual Active:")
+            translationBuilder.add("animorphs.ability_sign.animorphs.positive", "[+]")
+            translationBuilder.add("animorphs.ability_sign.animorphs.neutral", "[=]")
+            translationBuilder.add("animorphs.ability_sign.animorphs.negative", "[-]")
         }
     }
     class TransformationGenerator(output: FabricDataOutput) : FabricGenericProvider<Transformation>("animorphs/transformations", output) {
         override fun generateTypes(consumer: Consumer<Transformation?>?) {
             Consumer<Consumer<Transformation?>?> { t ->
                 t.accept(Transformation()
+                    .setColor(Color(238, 196, 65).rgb)
                     .setId(Identifier("animorphs:bee"))
                     .setSkin(Identifier("animorphs:transformations/bee"))
                     .setSlim(Identifier("animorphs:transformations/bee_slim"))
@@ -79,8 +82,8 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
                     .addAbilities(
                         arrayListOf<Identifier>()
                             .addSelf(Identifier("animorphs:beefly"))
-                            .addSelf(Identifier("animorphs:jump_boost"))
-                            .addSelf(Identifier("animorphs:negate_fall_damage"))
+                            .addSelf(Identifier("animorphs:jump_boost_status_effect"))
+                            .addSelf(Identifier("animorphs:immune_to_fall_damage"))
                             .addSelf(Identifier("animorphs:soft_wings"))
                     )
                     .addConditions(
@@ -90,6 +93,7 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
                 )
 
                 t.accept(Transformation()
+                    .setColor(Color(197, 93, 24).rgb)
                     .setId(Identifier("animorphs:magma_cube"))
                     .setSkin(Identifier("animorphs:transformations/magmacube"))
                     .setSlim(Identifier("animorphs:transformations/magmacube"))
@@ -97,8 +101,8 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
                     .addAbilities(
                         arrayListOf<Identifier>()
                             .addSelf(Identifier("animorphs:magmatic_jump"))
-                            .addSelf(Identifier("animorphs:jump_boost"))
-                            .addSelf(Identifier("animorphs:negate_fall_damage"))
+                            .addSelf(Identifier("animorphs:fire_protection_status_effect"))
+                            .addSelf(Identifier("animorphs:immune_to_fall_damage"))
                             .addSelf(Identifier("animorphs:wet_obsidian"))
                     )
                     .addConditions(
@@ -119,6 +123,48 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
     class AbilityGenerator(output: FabricDataOutput) : FabricGenericProvider<Ability>("animorphs/abilities", output) {
         override fun generateTypes(consumer: Consumer<Ability?>?) {
             Consumer<Consumer<Ability?>?> { t ->
+                t.accept(Ability()
+                    .setId(Identifier("animorphs:beefly"))
+                    .setName("animorphs.ability.animorphs.name.beefly")
+                    .setColor(Color(235, 194, 64))
+                    .setSign(Ability.Sign.POSITIVE)
+                    .setDesc(arrayListOf<String>().addSelf("animorphs.ability.animorphs.desc.beefly"))
+                    .addRules(
+                        arrayListOf<Rule>()
+                    )
+                )
+                t.accept(Ability()
+                    .setId(Identifier("animorphs:soft_wings"))
+                    .setName("animorphs.ability.animorphs.name.soft_wings")
+                    .setColor(Color(217, 231, 252))
+                    .setSign(Ability.Sign.NEGATIVE)
+                    .setDesc(arrayListOf<String>().addSelf("animorphs.ability.animorphs.desc.soft_wings"))
+                    .addRules(
+                        arrayListOf<Rule>()
+                    )
+                )
+
+                t.accept(Ability()
+                    .setId(Identifier("animorphs:magmatic_jump"))
+                    .setName("animorphs.ability.animorphs.name.magmatic_jump")
+                    .setColor(Color(195, 92, 24))
+                    .setSign(Ability.Sign.POSITIVE)
+                    .setDesc(arrayListOf<String>().addSelf("animorphs.ability.animorphs.desc.magmatic_jump"))
+                    .addRules(
+                        arrayListOf<Rule>()
+                    )
+                )
+                t.accept(Ability()
+                    .setId(Identifier("animorphs:wet_obsidian"))
+                    .setName("animorphs.ability.animorphs.name.wet_obsidian")
+                    .setColor(Color(97, 77, 97))
+                    .setSign(Ability.Sign.NEGATIVE)
+                    .setDesc(arrayListOf<String>().addSelf("animorphs.ability.animorphs.desc.wet_obsidian"))
+                    .addRules(
+                        arrayListOf<Rule>()
+                    )
+                )
+
                 (DamageTypes::class.java.declaredFields).forEach { e ->
                     if (!Modifier.isStatic(e.modifiers) && e.canAccess(null))
                         return@forEach
@@ -126,7 +172,7 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
                     val damageType = (e.get(null) as RegistryKey<DamageType>)
                     t.accept(Ability()
                         .setId(Identifier("animorphs:immune_to_${damageType.value.path}_damage"))
-                        .setName("animorphs.ability.animorphs.${damageType.value.path}")
+                        .setName("animorphs.ability.animorphs.name.immune_to_${damageType.value.path}_damage")
                         .setSign(Ability.Sign.POSITIVE)
                         .setColor(Color(200, 220, 255))
                         .addRules(

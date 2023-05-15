@@ -1,7 +1,7 @@
 {
   "color": -3613441,
   "id": "animorphs:immune_to_magic_damage",
-  "key": "animorphs.ability.animorphs.magic",
+  "key": "animorphs.ability.animorphs.name.immune_to_magic_damage",
   "rules": [
     {
       "decorator": {

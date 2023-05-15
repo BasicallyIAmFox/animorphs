@@ -1,7 +1,7 @@
 {
   "color": -3613441,
   "id": "animorphs:immune_to_sweet_berry_bush_damage",
-  "key": "animorphs.ability.animorphs.sweet_berry_bush",
+  "key": "animorphs.ability.animorphs.name.immune_to_sweet_berry_bush_damage",
   "rules": [
     {
       "decorator": {

@@ -1,7 +1,7 @@
 {
   "color": -3613441,
   "id": "animorphs:immune_to_sting_damage",
-  "key": "animorphs.ability.animorphs.sting",
+  "key": "animorphs.ability.animorphs.name.immune_to_sting_damage",
   "rules": [
     {
       "decorator": {

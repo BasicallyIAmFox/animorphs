@@ -5,7 +5,6 @@ import net.minecraft.util.Identifier
 
 open class RuleDecorator {
     lateinit var id: Identifier
-        protected set
 
     fun update(playerEntity: ServerPlayerEntity) {
     }

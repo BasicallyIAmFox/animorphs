@@ -1,10 +1,11 @@
 {
   "abilities": [
     "animorphs:beefly",
-    "animorphs:jump_boost",
-    "animorphs:negate_fall_damage",
+    "animorphs:jump_boost_status_effect",
+    "animorphs:immune_to_fall_damage",
     "animorphs:soft_wings"
   ],
+  "color": -1129407,
   "conditions": [
     {
       "decorator": {

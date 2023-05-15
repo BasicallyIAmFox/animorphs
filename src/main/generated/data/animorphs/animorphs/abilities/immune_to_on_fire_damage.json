@@ -1,7 +1,7 @@
 {
   "color": -3613441,
   "id": "animorphs:immune_to_on_fire_damage",
-  "key": "animorphs.ability.animorphs.on_fire",
+  "key": "animorphs.ability.animorphs.name.immune_to_on_fire_damage",
   "rules": [
     {
       "decorator": {

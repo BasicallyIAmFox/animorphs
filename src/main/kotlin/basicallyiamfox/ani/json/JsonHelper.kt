@@ -50,6 +50,18 @@ fun JsonElement.asIdentifier(name: String, defaultIdentifier: Identifier): Ident
 catch (_: Exception) {
     defaultIdentifier
 }
+fun JsonObject.getIdentifier(name: String): Identifier = try {
+    Identifier(getString(name))
+}
+catch (_: Exception) {
+    throw JsonSyntaxException("Expected " + name + " to be an Identifier, was " + getType())
+}
+fun JsonObject.getIdentifier(name: String, defaultValue: Identifier): Identifier = try {
+    Identifier(getString(name))
+}
+catch (_: Exception) {
+    defaultValue
+}
 
 // Most methods as extensions from net.minecraft.util.JsonHelper
 fun JsonElement.isString(): Boolean = JsonHelper.isString(this)

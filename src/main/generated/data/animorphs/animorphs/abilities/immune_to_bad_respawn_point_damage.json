@@ -1,7 +1,7 @@
 {
   "color": -3613441,
   "id": "animorphs:immune_to_bad_respawn_point_damage",
-  "key": "animorphs.ability.animorphs.bad_respawn_point",
+  "key": "animorphs.ability.animorphs.name.immune_to_bad_respawn_point_damage",
   "rules": [
     {
       "decorator": {

@@ -1,7 +1,7 @@
 {
   "color": -3613441,
   "id": "animorphs:immune_to_hot_floor_damage",
-  "key": "animorphs.ability.animorphs.hot_floor",
+  "key": "animorphs.ability.animorphs.name.immune_to_hot_floor_damage",
   "rules": [
     {
       "decorator": {

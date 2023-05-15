@@ -8,9 +8,20 @@ import basicallyiamfox.ani.transformation.TransformationManager
 import basicallyiamfox.ani.transformation.ability.AbilityManager
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
-import net.minecraft.client.MinecraftClient
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider.TranslationBuilder
 import net.minecraft.server.DataPackContents
 import net.minecraft.server.MinecraftServer
+import net.minecraft.util.Identifier
+
+fun TranslationBuilder.addAbility(abilityId: Identifier, value: String) {
+    add("animorphs.ability.animorphs.name.${abilityId.path}", value)
+}
+fun TranslationBuilder.addAbilityDesc(abilityId: Identifier, value: String) {
+    add("animorphs.ability.animorphs.desc.${abilityId.path}", value)
+}
+fun TranslationBuilder.addAbilityDesc(abilityId: Identifier, index: Int, value: String) {
+    add("animorphs.ability.animorphs.desc.${abilityId.path}.$index", value)
+}
 
 fun DataPackContents.getTransformationLoader(): ServerTransformationLoader {
     return (this as IDataPackContents).getServerTransformationLoader()
@@ -25,10 +36,10 @@ fun MinecraftServer.getAbilityLoader(): ServerAbilityLoader {
     return this.resourceManagerHolder.dataPackContents.getAbilityLoader()
 }
 
-fun MinecraftClient.getTransformationManager(): TransformationManager {
+fun getTransformationManager(): TransformationManager {
     return Networking.Companion.ThisClassExistsOnClientOnly.instance.transformations!!
 }
-fun MinecraftClient.getAbilityManager(): AbilityManager {
+fun getAbilityManager(): AbilityManager {
     return Networking.Companion.ThisClassExistsOnClientOnly.instance.abilities!!
 }
 

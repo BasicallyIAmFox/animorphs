@@ -1,7 +1,7 @@
 {
   "color": -3613441,
   "id": "animorphs:immune_to_stalagmite_damage",
-  "key": "animorphs.ability.animorphs.stalagmite",
+  "key": "animorphs.ability.animorphs.name.immune_to_stalagmite_damage",
   "rules": [
     {
       "decorator": {

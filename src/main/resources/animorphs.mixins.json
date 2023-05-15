@@ -3,11 +3,18 @@
   "package": "basicallyiamfox.ani.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "DataPackContentsMixin"
+    "DataPackContentsMixin",
+    "PlayerEntityMixin",
+    "PlayerInventoryMixin",
+    "ServerPlayerEntityMixin"
   ],
   "client": [
+    "AbstractClientPlayerEntityMixin",
+    "ItemStackMixin"
+  ],
+  "server": [
   ],
   "injectors": {
     "defaultRequire": 1
-	}
+  }
 }

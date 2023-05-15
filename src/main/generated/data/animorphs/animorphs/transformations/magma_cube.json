@@ -1,10 +1,11 @@
 {
   "abilities": [
     "animorphs:magmatic_jump",
-    "animorphs:jump_boost",
-    "animorphs:negate_fall_damage",
+    "animorphs:fire_protection_status_effect",
+    "animorphs:immune_to_fall_damage",
     "animorphs:wet_obsidian"
   ],
+  "color": -3842792,
   "conditions": [
     {
       "decorator": {

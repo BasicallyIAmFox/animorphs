@@ -1,7 +1,7 @@
 {
   "color": -3613441,
   "id": "animorphs:immune_to_mob_projectile_damage",
-  "key": "animorphs.ability.animorphs.mob_projectile",
+  "key": "animorphs.ability.animorphs.name.immune_to_mob_projectile_damage",
   "rules": [
     {
       "decorator": {

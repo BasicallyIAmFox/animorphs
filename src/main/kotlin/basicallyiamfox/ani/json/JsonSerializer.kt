@@ -8,16 +8,16 @@ class JsonSerializer {
     companion object {
         class Self<T>(var value: T)
 
-        val toJsonFunctions: MutableMap<Class<*>, MutableMap<Class<out JsonElement>, Function<Self<*>, JsonElement>>> =
-            HashMap()
-        val fromJsonFunctions: MutableMap<Class<*>, MutableMap<Class<out JsonElement>, Function<JsonElement, *>>> =
-            HashMap()
+        val toJsonFunctions: MutableMap<String, MutableMap<String, Function<Self<*>, JsonElement>>> =
+            hashMapOf()
+        val fromJsonFunctions: MutableMap<String, MutableMap<String, Function<JsonElement, *>>> =
+            hashMapOf()
 
         inline fun <reified TType, reified TReturn : JsonElement> addSerializer(function: Function<TType, TReturn>) {
-            val typeClass: Class<TType> = TType::class.java
-            val returnClass: Class<TReturn> = TReturn::class.java
+            val typeClass = TType::class.java.name
+            val returnClass = TReturn::class.java.name
 
-            val map: MutableMap<Class<out JsonElement>, Function<Self<*>, JsonElement>>
+            val map: MutableMap<String, Function<Self<*>, JsonElement>>
             if (toJsonFunctions.containsKey(typeClass)) {
                 map = toJsonFunctions[typeClass]!!
                 if (map.containsKey(returnClass)) {
@@ -26,7 +26,7 @@ class JsonSerializer {
                     map[returnClass] = Function { self: Self<*> -> function.apply(self.value as TType) }
                 }
             } else {
-                map = HashMap()
+                map = hashMapOf()
                 map[returnClass] = Function { self: Self<*> -> function.apply(self.value as TType) }
                 toJsonFunctions[typeClass] = map
             }
@@ -34,10 +34,10 @@ class JsonSerializer {
 
         @Throws(OperationsException::class)
         inline fun <reified TType, reified TReturn : JsonElement> addDeserializer(function: Function<TReturn, TType>) {
-            val typeClass: Class<TType> = TType::class.java
-            val returnClass: Class<TReturn> = TReturn::class.java
+            val typeClass = TType::class.java.name
+            val returnClass = TReturn::class.java.name
 
-            val map: MutableMap<Class<out JsonElement>, Function<JsonElement, *>>
+            val map: MutableMap<String, Function<JsonElement, *>>
             if (fromJsonFunctions.containsKey(typeClass)) {
                 map = fromJsonFunctions[typeClass]!!
                 if (map.containsKey(returnClass)) {
@@ -50,7 +50,7 @@ class JsonSerializer {
                     }
                 }
             } else {
-                map = HashMap()
+                map = hashMapOf()
                 map[returnClass] = Function<JsonElement, Any> { self: JsonElement ->
                     function.apply(
                         self as TReturn
@@ -61,11 +61,15 @@ class JsonSerializer {
         }
 
         inline fun <reified TType, reified TReturn : JsonElement> toJson(value: TType): TReturn {
-            return toJsonFunctions[TType::class.java]!![TReturn::class.java]!!.apply(Self(value)) as TReturn
+            val map = toJsonFunctions[TType::class.java.name]!!
+            val func = map[TReturn::class.java.name]!!
+            return func.apply(Self(value)) as TReturn
         }
 
         inline fun <reified TType, reified TReturn : JsonElement> fromJson(obj: TReturn): TType {
-            return fromJsonFunctions[TType::class.java]!![TReturn::class.java]!!.apply(obj) as TType
+            val map = fromJsonFunctions[TType::class.java.name]
+            val func = map?.get(TReturn::class.java.name)
+            return func?.apply(obj) as TType
         }
     }
 }

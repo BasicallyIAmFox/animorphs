@@ -8,13 +8,13 @@ class PacketSender {
     companion object {
         class Self<T>(var value: T)
 
-        val toJsonFunctions: MutableMap<Class<*>, Action<Self<*>, PacketByteBuf>> =
-            HashMap()
-        val fromJsonFunctions: MutableMap<Class<*>, Function<PacketByteBuf, *>> =
-            HashMap()
+        val toJsonFunctions: MutableMap<String, Action<Self<*>, PacketByteBuf>> =
+            hashMapOf()
+        val fromJsonFunctions: MutableMap<String, Function<PacketByteBuf, *>> =
+            hashMapOf()
 
         inline fun <reified TType> addSender(function: Action<TType, PacketByteBuf>) {
-            val typeClass: Class<TType> = TType::class.java
+            val typeClass = TType::class.java.name
 
             if (!toJsonFunctions.containsKey(typeClass)) {
                 toJsonFunctions[typeClass] = Action { self, packetByteBuf -> function.apply(self.value as TType, packetByteBuf) }
@@ -22,7 +22,7 @@ class PacketSender {
         }
 
         inline fun <reified TType> addReceiver(function: Function<PacketByteBuf, TType>) {
-            val typeClass: Class<TType> = TType::class.java
+            val typeClass = TType::class.java.name
 
             if (!fromJsonFunctions.containsKey(typeClass)) {
                 fromJsonFunctions[typeClass] = function
@@ -30,11 +30,13 @@ class PacketSender {
         }
 
         inline fun <reified TType> toPacket(value: TType, obj: PacketByteBuf) {
-            toJsonFunctions[TType::class.java]!!.apply(Self(value), obj)
+            val func = toJsonFunctions[TType::class.java.name]
+            func?.apply(Self(value), obj)
         }
 
         inline fun <reified TType> fromPacket(obj: PacketByteBuf): TType {
-            return fromJsonFunctions[TType::class.java]!!.apply(obj) as TType
+            val func = fromJsonFunctions[TType::class.java.name]
+            return func?.apply(obj) as TType
         }
     }
 }

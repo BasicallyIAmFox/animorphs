@@ -1,7 +1,7 @@
 {
   "color": -3613441,
   "id": "animorphs:immune_to_out_of_world_damage",
-  "key": "animorphs.ability.animorphs.out_of_world",
+  "key": "animorphs.ability.animorphs.name.immune_to_out_of_world_damage",
   "rules": [
     {
       "decorator": {

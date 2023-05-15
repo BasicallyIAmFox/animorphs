@@ -1,7 +1,7 @@
 {
   "color": -3613441,
   "id": "animorphs:immune_to_fall_damage",
-  "key": "animorphs.ability.animorphs.fall",
+  "key": "animorphs.ability.animorphs.name.immune_to_fall_damage",
   "rules": [
     {
       "decorator": {

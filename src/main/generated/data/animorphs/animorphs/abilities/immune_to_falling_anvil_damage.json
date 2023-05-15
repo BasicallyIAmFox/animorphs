@@ -1,7 +1,7 @@
 {
   "color": -3613441,
   "id": "animorphs:immune_to_falling_anvil_damage",
-  "key": "animorphs.ability.animorphs.falling_anvil",
+  "key": "animorphs.ability.animorphs.name.immune_to_falling_anvil_damage",
   "rules": [
     {
       "decorator": {

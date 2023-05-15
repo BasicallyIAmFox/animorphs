@@ -1,7 +1,7 @@
 {
   "color": -3613441,
   "id": "animorphs:immune_to_starve_damage",
-  "key": "animorphs.ability.animorphs.starve",
+  "key": "animorphs.ability.animorphs.name.immune_to_starve_damage",
   "rules": [
     {
       "decorator": {

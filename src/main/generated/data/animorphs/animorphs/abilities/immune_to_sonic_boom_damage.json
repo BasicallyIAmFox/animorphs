@@ -1,7 +1,7 @@
 {
   "color": -3613441,
   "id": "animorphs:immune_to_sonic_boom_damage",
-  "key": "animorphs.ability.animorphs.sonic_boom",
+  "key": "animorphs.ability.animorphs.name.immune_to_sonic_boom_damage",
   "rules": [
     {
       "decorator": {

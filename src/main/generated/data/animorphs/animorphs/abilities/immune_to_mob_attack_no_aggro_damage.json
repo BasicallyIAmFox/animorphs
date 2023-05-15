@@ -1,7 +1,7 @@
 {
   "color": -3613441,
   "id": "animorphs:immune_to_mob_attack_no_aggro_damage",
-  "key": "animorphs.ability.animorphs.mob_attack_no_aggro",
+  "key": "animorphs.ability.animorphs.name.immune_to_mob_attack_no_aggro_damage",
   "rules": [
     {
       "decorator": {

@@ -1,7 +1,7 @@
 {
   "color": -3613441,
   "id": "animorphs:immune_to_lightning_bolt_damage",
-  "key": "animorphs.ability.animorphs.lightning_bolt",
+  "key": "animorphs.ability.animorphs.name.immune_to_lightning_bolt_damage",
   "rules": [
     {
       "decorator": {

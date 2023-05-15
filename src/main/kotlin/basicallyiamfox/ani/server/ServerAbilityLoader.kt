@@ -40,6 +40,8 @@ class ServerAbilityLoader : JsonDataLoader(GSON, "animorphs/abilities") {
 
         this.manager = AbilityManager()
         this.manager!!.load(transformationMap)
+
+        LOGGER.info("Loaded ${transformationMap.count()} transformation abilities")
     }
 
     fun get(): Iterable<Ability>? {

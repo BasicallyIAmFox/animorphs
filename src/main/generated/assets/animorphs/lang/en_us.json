@@ -1,9 +1,18 @@
 {
-  "animorphs.ability.animorphs.beefly": "Beefly",
-  "animorphs.ability.animorphs.magmatic_jump": "Magmatic jump",
-  "animorphs.ability.animorphs.negates_fall_damage": "Negates fall damage",
-  "animorphs.ability.animorphs.soft_wings": "Soft Wings",
-  "animorphs.ability.animorphs.wet_obsidian": "Wet Obsidian",
+  "animorphs.ability.animorphs.desc.beefly": "Allows to fly while holding [SPACE] button.",
+  "animorphs.ability.animorphs.desc.magmatic_jump": "Holding [SHIFT] long enough will allow to jump high.",
+  "animorphs.ability.animorphs.desc.soft_wings": "You drown much faster.",
+  "animorphs.ability.animorphs.desc.wet_obsidian": "You take damage from touching water.",
+  "animorphs.ability.animorphs.name.beefly": "Beefly",
+  "animorphs.ability.animorphs.name.immune_to_fall_damage": "Negates fall damage",
+  "animorphs.ability.animorphs.name.magmatic_jump": "Magmatic Jump",
+  "animorphs.ability.animorphs.name.soft_wings": "Soft Wings",
+  "animorphs.ability.animorphs.name.wet_obsidian": "Wet Obsidian",
+  "animorphs.ability_sign.animorphs.negative": "[-]",
+  "animorphs.ability_sign.animorphs.neutral": "[=]",
+  "animorphs.ability_sign.animorphs.positive": "[+]",
+  "animorphs.tooltip.animorphs.hold_shift_to_show": "Hold [SHIFT] to show abilities.",
+  "animorphs.tooltip.animorphs.is_visual_active": "Is Visual Active:",
   "item.animorphs.magma_jelly": "Magma Jelly",
   "item.animorphs.stinger_o_pollen": "Stinger o' Pollen"
 }
