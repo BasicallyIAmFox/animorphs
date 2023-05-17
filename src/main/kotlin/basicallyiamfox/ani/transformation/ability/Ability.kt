@@ -2,8 +2,9 @@ package basicallyiamfox.ani.transformation.ability
 
 import basicallyiamfox.ani.transformation.condition.Condition
 import basicallyiamfox.ani.transformation.rule.Rule
-import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.Identifier
+import net.minecraft.world.World
 import java.awt.Color
 
 class Ability {
@@ -27,10 +28,10 @@ class Ability {
     var colorHex = 0xFFFFFF
         private set
 
-    fun tick(player: ServerPlayerEntity) {
-        if (conditions.all { condition -> condition.isActive(player) }) {
+    fun tick(world: World, player: PlayerEntity) {
+        if (conditions.all { condition -> condition.isActive(world, player) }) {
             rules.forEach {
-                it.tick(player)
+                it.tick(world, player)
             }
         }
     }

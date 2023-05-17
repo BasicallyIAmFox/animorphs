@@ -8,12 +8,11 @@ import basicallyiamfox.ani.transformation.ability.Ability
 import basicallyiamfox.ani.transformation.ability.AbilityManager
 import basicallyiamfox.ani.transformation.condition.Condition
 import basicallyiamfox.ani.transformation.condition.ConditionDecorators
-import basicallyiamfox.ani.transformation.condition.decorator.DuringTimeTicksConditionDecorator
-import basicallyiamfox.ani.transformation.condition.decorator.InDimensionConditionDecorator
+import basicallyiamfox.ani.transformation.condition.decorator.*
 import basicallyiamfox.ani.transformation.rule.Rule
 import basicallyiamfox.ani.transformation.rule.RuleDecorators
-import basicallyiamfox.ani.transformation.rule.decorator.ImmuneDamageTypeRuleDecorator
-import basicallyiamfox.ani.transformation.rule.decorator.StatusEffectRuleDecorator
+import basicallyiamfox.ani.transformation.rule.decorator.*
+import basicallyiamfox.ani.util.ComparisonOperator
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import net.minecraft.registry.Registries
@@ -29,11 +28,21 @@ class Serializers {
             init_Ability()
             init_Rule()
 
+            init_AndConditionDecorator()
+            init_OrConditionDecorator()
             init_DuringTimeTicksConditionDecorator()
             init_InDimensionConditionDecorator()
+            init_IsDayConditionDecorator()
+            init_IsNightConditionDecorator()
+            init_IsSkyVisibleConditionDecorator()
+            init_LightLevelConditionDecorator()
+            init_BiomeTemperatureConditionDecorator()
 
             init_ImmuneDamageTypeRuleDecorator()
             init_StatusEffectRuleDecorator()
+            init_BeeflyRuleDecorator()
+            init_NoteTickRuleDecorator()
+            init_MagmaticJumpRuleDecorator()
         }
 
         private fun init_Managers() {
@@ -102,7 +111,7 @@ class Serializers {
                 }
 
                 if (it.color != null) {
-                    obj.addProperty("color", it.color)
+                    obj.addProperty("color", it.color!!.and(0xFFFFFF))
                 }
 
                 if (it.abilities.size > 0) {
@@ -166,7 +175,7 @@ class Serializers {
                 }
 
                 if (it.hasNumber("color")) {
-                    inst.setColor(it.getInt("color"))
+                    inst.setColor(it.getInt("color").or(0xFF000000.toInt()))
                 }
 
                 if (it.hasArray("abilities")) {
@@ -217,7 +226,7 @@ class Serializers {
                 val obj = JsonObject()
 
                 if (it.decorator != null) {
-                    ConditionDecorators.registry[it.decorator!!.id]!!.serializer.applyObj(it.decorator!!, obj)
+                    obj.add("decorator", ConditionDecorators.registry[it.decorator!!.id]!!.serializer.applyObj(it.decorator!!))
                 }
 
                 return@addSerializer obj
@@ -258,7 +267,7 @@ class Serializers {
                 obj.addProperty("id", it.id)
                 obj.addProperty("key", it.name)
                 obj.addProperty("sign", it.sign)
-                obj.addProperty("color", it.colorHex)
+                obj.addProperty("color", it.colorHex.and(0xFFFFFF))
 
                 if (it.desc != null) {
                     if (it.desc!!.size == 1) {
@@ -316,7 +325,7 @@ class Serializers {
                 inst.setId(it.getIdentifier("id"))
                 inst.setName(it.getString("key"))
                 inst.setSign(it.asEnum("sign"))
-                inst.setColor(it.getInt("color"))
+                inst.setColor(it.getInt("color").or(0xFF000000.toInt()))
 
                 if (it.hasArray("description")) {
                     inst.setDesc(it.getArray("description").map { e ->
@@ -371,7 +380,7 @@ class Serializers {
                 val obj = JsonObject()
 
                 if (it.decorator != null) {
-                    RuleDecorators.registry[it.decorator!!.id]!!.serializer.applyObj(it.decorator!!, obj)
+                    obj.add("decorator", RuleDecorators.registry[it.decorator!!.id]!!.serializer.applyObj(it.decorator!!))
                 }
 
                 if (it.conditions.size > 0) {
@@ -428,6 +437,82 @@ class Serializers {
             }
         }
 
+        private fun init_AndConditionDecorator() {
+            JsonSerializer.addSerializer<AndConditionDecorator, JsonObject> {
+                val obj = JsonObject()
+                obj.addProperty("id", it.id)
+                obj.add("elements", it.decorators.map { e ->
+                    ConditionDecorators.registry[e.id]!!.serializer.applyObj(e)
+                }.toJsonArray())
+                return@addSerializer obj
+            }
+            PacketSender.addSender<AndConditionDecorator> { inst, buf ->
+                buf.writeIdentifier(inst.id)
+                buf.writeByte(inst.decorators.size)
+                inst.decorators.forEach { e ->
+                    buf.writeIdentifier(e.id)
+                    ConditionDecorators.registry2[e.id]!!.serializer.applyObj(e, buf)
+                }
+            }
+            JsonSerializer.addDeserializer<AndConditionDecorator, JsonObject> {
+                val inst = AndConditionDecorator()
+                inst.id = it.getIdentifier("id")
+                inst.decorators = it.getArray("elements").map { e ->
+                    val id = e.asJsonObject.getIdentifier("id")
+                    ConditionDecorators.registry[id]!!.deserializer.apply(id, e.asJsonObject)
+                }.toTypedArray()
+                return@addDeserializer inst
+            }
+            PacketSender.addReceiver { buf ->
+                val inst = AndConditionDecorator()
+                inst.id = buf.readIdentifier()
+                val eLen = buf.readByte().toInt()
+                inst.decorators = Array(eLen) {
+                    val id = buf.readIdentifier()
+                    return@Array ConditionDecorators.registry2[id]!!.deserializer.apply(buf)
+                }
+
+                return@addReceiver inst
+            }
+        }
+        private fun init_OrConditionDecorator() {
+            JsonSerializer.addSerializer<OrConditionDecorator, JsonObject> {
+                val obj = JsonObject()
+                obj.addProperty("id", it.id)
+                obj.add("elements", it.decorators.map { e ->
+                    ConditionDecorators.registry[e.id]!!.serializer.applyObj(e)
+                }.toJsonArray())
+                return@addSerializer obj
+            }
+            PacketSender.addSender<OrConditionDecorator> { inst, buf ->
+                buf.writeIdentifier(inst.id)
+                buf.writeByte(inst.decorators.size)
+                inst.decorators.forEach { e ->
+                    buf.writeIdentifier(e.id)
+                    ConditionDecorators.registry2[e.id]!!.serializer.applyObj(e, buf)
+                }
+            }
+            JsonSerializer.addDeserializer<OrConditionDecorator, JsonObject> {
+                val inst = OrConditionDecorator()
+                inst.id = it.getIdentifier("id")
+                inst.decorators = it.getArray("elements").map { e ->
+                    val id = e.asJsonObject.getIdentifier("id")
+                    ConditionDecorators.registry[id]!!.deserializer.apply(id, e.asJsonObject)
+                }.toTypedArray()
+                return@addDeserializer inst
+            }
+            PacketSender.addReceiver { buf ->
+                val inst = OrConditionDecorator()
+                inst.id = buf.readIdentifier()
+                val eLen = buf.readByte().toInt()
+                inst.decorators = Array(eLen) {
+                    val id = buf.readIdentifier()
+                    return@Array ConditionDecorators.registry2[id]!!.deserializer.apply(buf)
+                }
+
+                return@addReceiver inst
+            }
+        }
         private fun init_DuringTimeTicksConditionDecorator() {
             JsonSerializer.addSerializer<DuringTimeTicksConditionDecorator, JsonObject> {
                 val obj = JsonObject()
@@ -480,6 +565,122 @@ class Serializers {
                 return@addReceiver inst
             }
         }
+        private fun init_IsDayConditionDecorator() {
+            JsonSerializer.addSerializer<IsDayConditionDecorator, JsonObject> {
+                val obj = JsonObject()
+                obj.addProperty("id", it.id)
+                return@addSerializer obj
+            }
+            PacketSender.addSender<IsDayConditionDecorator> { inst, buf ->
+                buf.writeIdentifier(inst.id)
+            }
+            JsonSerializer.addDeserializer<IsDayConditionDecorator, JsonObject> {
+                val inst = IsDayConditionDecorator()
+                inst.id = it.getIdentifier("id")
+                return@addDeserializer inst
+            }
+            PacketSender.addReceiver { buf ->
+                val inst = IsDayConditionDecorator()
+                inst.id = buf.readIdentifier()
+                return@addReceiver inst
+            }
+        }
+        private fun init_IsNightConditionDecorator() {
+            JsonSerializer.addSerializer<IsNightConditionDecorator, JsonObject> {
+                val obj = JsonObject()
+                obj.addProperty("id", it.id)
+                return@addSerializer obj
+            }
+            PacketSender.addSender<IsNightConditionDecorator> { inst, buf ->
+                buf.writeIdentifier(inst.id)
+            }
+            JsonSerializer.addDeserializer<IsNightConditionDecorator, JsonObject> {
+                val inst = IsNightConditionDecorator()
+                inst.id = it.getIdentifier("id")
+                return@addDeserializer inst
+            }
+            PacketSender.addReceiver { buf ->
+                val inst = IsNightConditionDecorator()
+                inst.id = buf.readIdentifier()
+                return@addReceiver inst
+            }
+        }
+        private fun init_IsSkyVisibleConditionDecorator() {
+            JsonSerializer.addSerializer<IsSkyVisibleConditionDecorator, JsonObject> {
+                val obj = JsonObject()
+                obj.addProperty("id", it.id)
+                return@addSerializer obj
+            }
+            PacketSender.addSender<IsSkyVisibleConditionDecorator> { inst, buf ->
+                buf.writeIdentifier(inst.id)
+            }
+            JsonSerializer.addDeserializer<IsSkyVisibleConditionDecorator, JsonObject> {
+                val inst = IsSkyVisibleConditionDecorator()
+                inst.id = it.getIdentifier("id")
+                return@addDeserializer inst
+            }
+            PacketSender.addReceiver { buf ->
+                val inst = IsSkyVisibleConditionDecorator()
+                inst.id = buf.readIdentifier()
+                return@addReceiver inst
+            }
+        }
+        private fun init_LightLevelConditionDecorator() {
+            JsonSerializer.addSerializer<LightLevelConditionDecorator, JsonObject> {
+                val obj = JsonObject()
+                obj.addProperty("id", it.id)
+                obj.addProperty("operator", it.operator)
+                obj.addProperty("compared", it.value)
+                return@addSerializer obj
+            }
+            PacketSender.addSender<LightLevelConditionDecorator> { inst, buf ->
+                buf.writeIdentifier(inst.id)
+                buf.writeEnumConstant(inst.operator)
+                buf.writeByte(inst.value)
+            }
+            JsonSerializer.addDeserializer<LightLevelConditionDecorator, JsonObject> {
+                val inst = LightLevelConditionDecorator()
+                inst.id = it.getIdentifier("id")
+                inst.operator = it.asEnum("operator")
+                inst.value = it.getInt("compared")
+                return@addDeserializer inst
+            }
+            PacketSender.addReceiver { buf ->
+                val inst = LightLevelConditionDecorator()
+                inst.id = buf.readIdentifier()
+                inst.operator = buf.readEnumConstant(ComparisonOperator::class.java)
+                inst.value = buf.readByte().toInt()
+                return@addReceiver inst
+            }
+        }
+        private fun init_BiomeTemperatureConditionDecorator() {
+            JsonSerializer.addSerializer<BiomeTemperatureConditionDecorator, JsonObject> {
+                val obj = JsonObject()
+                obj.addProperty("id", it.id)
+                obj.addProperty("operator", it.operator)
+                obj.addProperty("compared", it.value)
+                return@addSerializer obj
+            }
+            PacketSender.addSender<BiomeTemperatureConditionDecorator> { inst, buf ->
+                buf.writeIdentifier(inst.id)
+                buf.writeEnumConstant(inst.operator)
+                buf.writeFloat(inst.value)
+            }
+            JsonSerializer.addDeserializer<BiomeTemperatureConditionDecorator, JsonObject> {
+                val inst = BiomeTemperatureConditionDecorator()
+                inst.id = it.getIdentifier("id")
+                inst.operator = it.asEnum("operator")
+                inst.value = it.getFloat("compared")
+                return@addDeserializer inst
+            }
+            PacketSender.addReceiver { buf ->
+                val inst = BiomeTemperatureConditionDecorator()
+                inst.id = buf.readIdentifier()
+                inst.operator = buf.readEnumConstant(ComparisonOperator::class.java)
+                inst.value = buf.readFloat()
+                return@addReceiver inst
+            }
+        }
 
         private fun init_ImmuneDamageTypeRuleDecorator() {
             JsonSerializer.addSerializer<ImmuneDamageTypeRuleDecorator, JsonObject> {
@@ -510,22 +711,106 @@ class Serializers {
                 val obj = JsonObject()
                 obj.addProperty("id", it.id)
                 obj.addProperty("effect", it.statusEffectId)
+                obj.addProperty("amplifier", it.amplifier)
                 return@addSerializer obj
             }
             PacketSender.addSender<StatusEffectRuleDecorator> { inst, buf ->
                 buf.writeIdentifier(inst.id)
                 buf.writeIdentifier(inst.statusEffectId)
+                buf.writeByte(inst.amplifier)
             }
             JsonSerializer.addDeserializer<StatusEffectRuleDecorator, JsonObject> {
                 val inst = StatusEffectRuleDecorator()
                 inst.id = it.getIdentifier("id")
                 inst.statusEffectId = it.getIdentifier("effect")
+                inst.amplifier = it.getByte("amplifier").toInt()
                 return@addDeserializer inst
             }
             PacketSender.addReceiver { buf ->
                 val inst = StatusEffectRuleDecorator()
                 inst.id = buf.readIdentifier()
                 inst.statusEffectId = buf.readIdentifier()
+                inst.amplifier = buf.readByte().toInt()
+                return@addReceiver inst
+            }
+        }
+        private fun init_BeeflyRuleDecorator() {
+            JsonSerializer.addSerializer<BeeflyRuleDecorator, JsonObject> {
+                val obj = JsonObject()
+                obj.addProperty("id", it.id)
+                obj.addProperty("minSpeed", it.minSpeed)
+                obj.addProperty("maxSpeed", it.maxSpeed)
+                obj.addProperty("startAt", it.flyStart)
+                return@addSerializer obj
+            }
+            PacketSender.addSender<BeeflyRuleDecorator> { inst, buf ->
+                buf.writeIdentifier(inst.id)
+                buf.writeFloat(inst.minSpeed)
+                buf.writeFloat(inst.maxSpeed)
+                buf.writeShort(inst.flyStart)
+            }
+            JsonSerializer.addDeserializer<BeeflyRuleDecorator, JsonObject> {
+                val inst = BeeflyRuleDecorator()
+                inst.id = it.getIdentifier("id")
+                inst.minSpeed = it.getFloat("minSpeed")
+                inst.maxSpeed = it.getFloat("maxSpeed")
+                inst.flyStart = it.getInt("startAt")
+                return@addDeserializer inst
+            }
+            PacketSender.addReceiver { buf ->
+                val inst = BeeflyRuleDecorator()
+                inst.id = buf.readIdentifier()
+                inst.minSpeed = buf.readFloat()
+                inst.maxSpeed = buf.readFloat()
+                inst.flyStart = buf.readShort().toInt()
+                return@addReceiver inst
+            }
+        }
+        private fun init_NoteTickRuleDecorator() {
+            JsonSerializer.addSerializer<NoteTickRuleDecorator, JsonObject> {
+                val obj = JsonObject()
+                obj.addProperty("id", it.id)
+                return@addSerializer obj
+            }
+            PacketSender.addSender<NoteTickRuleDecorator> { inst, buf ->
+                buf.writeIdentifier(inst.id)
+            }
+            JsonSerializer.addDeserializer<NoteTickRuleDecorator, JsonObject> {
+                val inst = NoteTickRuleDecorator()
+                inst.id = it.getIdentifier("id")
+                return@addDeserializer inst
+            }
+            PacketSender.addReceiver { buf ->
+                val inst = NoteTickRuleDecorator()
+                inst.id = buf.readIdentifier()
+                return@addReceiver inst
+            }
+        }
+        private fun init_MagmaticJumpRuleDecorator() {
+            JsonSerializer.addSerializer<MagmaticJumpRuleDecorator, JsonObject> {
+                val obj = JsonObject()
+                obj.addProperty("id", it.id)
+                obj.addProperty("ready", it.ready)
+                obj.addProperty("max", it.max)
+                return@addSerializer obj
+            }
+            PacketSender.addSender<MagmaticJumpRuleDecorator> { inst, buf ->
+                buf.writeIdentifier(inst.id)
+                buf.writeInt(inst.ready)
+                buf.writeInt(inst.max)
+            }
+            JsonSerializer.addDeserializer<MagmaticJumpRuleDecorator, JsonObject> {
+                val inst = MagmaticJumpRuleDecorator()
+                inst.id = it.getIdentifier("id")
+                inst.ready = it.getInt("ready")
+                inst.max = it.getInt("max")
+                return@addDeserializer inst
+            }
+            PacketSender.addReceiver { buf ->
+                val inst = MagmaticJumpRuleDecorator()
+                inst.id = buf.readIdentifier()
+                inst.ready = buf.readInt()
+                inst.max = buf.readInt()
                 return@addReceiver inst
             }
         }

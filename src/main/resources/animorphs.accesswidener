@@ -6,4 +6,5 @@ accessible    class    net/minecraft/server/MinecraftServer$ResourceManagerHolde
 accessible    field    net/minecraft/server/MinecraftServer    resourceManagerHolder    Lnet/minecraft/server/MinecraftServer$ResourceManagerHolder;
 
 accessible    method    net/minecraft/registry/RegistryKeys    of    (Ljava/lang/String;)Lnet/minecraft/registry/RegistryKey;
+accessible    method    net/minecraft/entity/Entity    movementInputToVelocity    (Lnet/minecraft/util/math/Vec3d;FF)Lnet/minecraft/util/math/Vec3d;
 accessible    method    net/minecraft/registry/Registries    create    (Lnet/minecraft/registry/RegistryKey;Lnet/minecraft/registry/Registries$Initializer;)Lnet/minecraft/registry/Registry;

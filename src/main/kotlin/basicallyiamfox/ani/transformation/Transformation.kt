@@ -2,10 +2,11 @@ package basicallyiamfox.ani.transformation
 
 import basicallyiamfox.ani.getAbilityManager
 import basicallyiamfox.ani.transformation.condition.Condition
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.registry.Registries
-import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.Identifier
+import net.minecraft.world.World
 
 class Transformation {
     val abilities = arrayListOf<Identifier>()
@@ -24,10 +25,14 @@ class Transformation {
     var color: Int? = null
         private set
 
-    fun tick(player: ServerPlayerEntity) {
-        if (conditions.all { condition -> condition.isActive(player) }) {
-            abilities.map { getAbilityManager().get(it) }.forEach {
-                it!!.tick(player)
+    fun isActive(world: World, player: PlayerEntity): Boolean {
+        return conditions.all { condition -> condition.isActive(world, player) }
+    }
+
+    fun tick(world: World, player: PlayerEntity) {
+        if (isActive(world, player)) {
+            abilities.map { player.getAbilityManager()!!.get(it) }.forEach {
+                it?.tick(world, player)
             }
         }
     }

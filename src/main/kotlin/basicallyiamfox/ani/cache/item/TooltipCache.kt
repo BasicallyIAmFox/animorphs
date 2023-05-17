@@ -1,6 +1,6 @@
 package basicallyiamfox.ani.cache.item
 
-import basicallyiamfox.ani.getAbilityManager
+import basicallyiamfox.ani.getClientAbilityManager
 import basicallyiamfox.ani.transformation.Transformation
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -24,23 +24,35 @@ class TooltipCache {
         val isVisualActiveOff: Text = Text.translatable(isVisualActiveKey).append(" ").append(Text.translatable("options.off").formatted(Formatting.RED))
 
         @JvmStatic
+        val desc = hashMapOf<Identifier, List<Text>>()
+        @JvmStatic
         val lines = hashMapOf<Identifier, List<Text>>()
 
+        @JvmStatic
+        fun loadDescForItem(item: Item, transformation: Transformation): List<Text> {
+            var descList = desc[Registries.ITEM.getId(item)]
+            if (descList == null) {
+                val list = arrayListOf<Text>()
+
+                if (!transformation.desc.isNullOrEmpty()) {
+                    transformation.desc!!.forEach {
+                        list.add(Text.translatable(it))
+                    }
+                }
+
+                desc[Registries.ITEM.getId(item)] = list
+                descList = list
+            }
+            return descList
+        }
         @JvmStatic
         fun loadForItem(item: Item, transformation: Transformation): List<Text> {
             var linesList = lines[Registries.ITEM.getId(item)]
             if (linesList == null) {
                 val list = arrayListOf<Text>()
-                if (transformation.desc != null && transformation.desc!!.isNotEmpty()) {
-                    transformation.desc!!.forEach {
-                        list.add(Text.translatable(it))
-                    }
-                    list.add(Text.empty())
-                }
-
                 for (a in transformation.abilities) {
                     var text = Text.literal("* ").setStyle(emptyWhite)
-                    val ability = getAbilityManager().get(a)
+                    val ability = getClientAbilityManager().get(a)
                     if (ability == null) {
                         list.add(text.append(Text.literal("Unable to load ability: ").append(Text.translatable(a.toTranslationKey()))))
                         continue
@@ -70,6 +82,7 @@ class TooltipCache {
         }
 
         fun clear() {
+            desc.clear()
             lines.clear()
         }
     }

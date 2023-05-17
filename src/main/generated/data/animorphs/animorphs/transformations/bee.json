@@ -5,18 +5,45 @@
     "animorphs:immune_to_fall_damage",
     "animorphs:soft_wings"
   ],
-  "color": -1129407,
+  "color": 15647809,
   "conditions": [
     {
       "decorator": {
-        "from": 0,
-        "id": "animorphs:during_time_ticks",
-        "to": 12999
+        "elements": [
+          {
+            "compared": 7,
+            "id": "animorphs:light_level",
+            "operator": "greater"
+          },
+          {
+            "elements": [
+              {
+                "id": "animorphs:is_day"
+              },
+              {
+                "id": "animorphs:is_sky_visible"
+              }
+            ],
+            "id": "animorphs:and"
+          }
+        ],
+        "id": "animorphs:or"
+      }
+    },
+    {
+      "decorator": {
+        "id": "animorphs:in_dimension",
+        "world": "minecraft:overworld"
       }
     }
   ],
+  "description": [
+    "animorphs.transformation.animorphs.desc.bee.0",
+    "animorphs.transformation.animorphs.desc.bee.1",
+    "animorphs.transformation.animorphs.desc.bee.2"
+  ],
   "id": "animorphs:bee",
   "item": "animorphs:stinger_o_pollen",
-  "skin": "animorphs:transformations/bee",
-  "slim": "animorphs:transformations/bee_slim"
+  "skin": "animorphs:textures/transformations/bee.png",
+  "slim": "animorphs:textures/transformations/bee_slim.png"
 }

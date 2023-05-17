@@ -1,21 +1,27 @@
 {
   "abilities": [
     "animorphs:magmatic_jump",
-    "animorphs:fire_protection_status_effect",
+    "animorphs:fire_resistance_status_effect",
     "animorphs:immune_to_fall_damage",
     "animorphs:wet_obsidian"
   ],
-  "color": -3842792,
+  "color": 12934424,
   "conditions": [
     {
       "decorator": {
-        "id": "animorphs:in_dimension",
-        "world": "minecraft:the_nether"
+        "compared": 1.5,
+        "id": "animorphs:biome_temperature",
+        "operator": "greaterOrEqual"
       }
     }
   ],
+  "description": [
+    "animorphs.transformation.animorphs.desc.magma_cube.0",
+    "animorphs.transformation.animorphs.desc.magma_cube.1",
+    "animorphs.transformation.animorphs.desc.magma_cube.2"
+  ],
   "id": "animorphs:magma_cube",
   "item": "animorphs:magma_jelly",
-  "skin": "animorphs:transformations/magmacube",
-  "slim": "animorphs:transformations/magmacube"
+  "skin": "animorphs:textures/transformations/magmacube.png",
+  "slim": "animorphs:textures/transformations/magmacube.png"
 }

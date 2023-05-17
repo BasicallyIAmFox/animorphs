@@ -4,8 +4,10 @@ import basicallyiamfox.ani.interfaces.IDataPackContents;
 import basicallyiamfox.ani.server.ServerAbilityLoader;
 import basicallyiamfox.ani.server.ServerTransformationLoader;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceReloader;
 import net.minecraft.server.DataPackContents;
+import net.minecraft.util.profiler.Profiler;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,6 +16,8 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 
 @Mixin(DataPackContents.class)
 public abstract class DataPackContentsMixin implements IDataPackContents {
@@ -34,7 +38,7 @@ public abstract class DataPackContentsMixin implements IDataPackContents {
     }
 
     @ModifyReturnValue(method = "getContents", at = @At("RETURN"))
-    private List<ResourceReloader> animorphs$getContents(List<ResourceReloader> list) {
+    private List<ResourceReloader> animorphs$addLoaders(List<ResourceReloader> list) {
         ArrayList<ResourceReloader> list1 = new ArrayList<>(list);
         list1.add(stLoader);
         list1.add(saLoader);

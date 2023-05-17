@@ -4,13 +4,18 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "DataPackContentsMixin",
+    "IEntityMixin",
+    "ILivingEntityMixin",
     "PlayerEntityMixin",
-    "PlayerInventoryMixin",
-    "ServerPlayerEntityMixin"
+    "bee_transformation.BeehiveBlockMixin",
+    "bee_transformation.PlayerEntityMixin",
+    "magmacube_transformation.PlayerEntityMixin",
+    "noteblock_transformation.PlayerEntityMixin"
   ],
   "client": [
     "AbstractClientPlayerEntityMixin",
-    "ItemStackMixin"
+    "ItemStackMixin",
+    "magmacube_transformation.PlayerEntityRendererMixin"
   ],
   "server": [
   ],

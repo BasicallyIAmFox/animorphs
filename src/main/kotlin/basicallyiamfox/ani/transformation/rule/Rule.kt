@@ -1,7 +1,8 @@
 package basicallyiamfox.ani.transformation.rule
 
 import basicallyiamfox.ani.transformation.condition.Condition
-import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.world.World
 
 class Rule {
     val conditions = arrayListOf<Condition>()
@@ -9,9 +10,9 @@ class Rule {
     var decorator: RuleDecorator? = null
         private set
 
-    fun tick(player: ServerPlayerEntity) {
-        if (conditions.all { condition -> condition.isActive(player) }) {
-            decorator?.update(player)
+    fun tick(world: World, player: PlayerEntity) {
+        if (conditions.all { condition -> condition.isActive(world, player) }) {
+            decorator?.update(world, player)
         }
     }
 

@@ -8,8 +8,11 @@ import basicallyiamfox.ani.transformation.rule.RuleDecorators
 import net.fabricmc.api.ModInitializer
 import org.slf4j.LoggerFactory
 
+
 object Animorphs : ModInitializer {
     private val logger = LoggerFactory.getLogger("animorphs")
+
+    private val lootTables = AnimorphsLootTables()
 
     override fun onInitialize() {
         Serializers.init()
@@ -20,5 +23,7 @@ object Animorphs : ModInitializer {
         Networking.init()
 
         AnimorphsItems.init()
+
+        lootTables.listen()
     }
 }

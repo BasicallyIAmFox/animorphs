@@ -25,9 +25,8 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity {
         super(world, pos, yaw, gameProfile);
     }
 
-    @Unique
     @Inject(method = "getSkinTexture", at = @At("RETURN"), cancellable = true)
-    private void animorphs$getSkinTexture(CallbackInfoReturnable<Identifier> cir) {
+    private void animorphs$changeSkinDependingOnTransformation(CallbackInfoReturnable<Identifier> cir) {
         if (isSpectator())
             return;
 
@@ -40,19 +39,18 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity {
             return;
         }
 
-        var transformation = ExtensionsKt.getTransformationManager().get(duck.getActiveTransformation());
-        Identifier path = null;
-        if (duck.getTransformationItem().getOrCreateNbt().getBoolean(TransformationItem.VISUAL_ACTIVE_KEY)) {
-            if (DefaultSkinHelper.getModel(getUuid()).equals("slim")) {
-                path = transformation.getSkinSlim();
-            }
-            else {
-                path = transformation.getSkin();
-            }
+        var transformation = ExtensionsKt.getClientTransformationManager().get(duck.getActiveTransformation());
+        if (transformation == null || !transformation.isActive(world, this))
+            return;
+
+        Identifier path;
+        if (DefaultSkinHelper.getModel(getUuid()).equals("slim")) {
+            path = transformation.getSkinSlim();
+        }
+        else {
+            path = transformation.getSkin();
         }
 
-        if (path != null) {
-            cir.setReturnValue(path);
-        }
+        cir.setReturnValue(path);
     }
 }

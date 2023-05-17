@@ -10,8 +10,12 @@ class AnimorphsItems {
     companion object {
         private val ITEMS = LinkedHashMap<Identifier, Item>()
 
+        @JvmField
         val STINGER_O_POLLEN: Item = add("stinger_o_pollen", StingerOPollenItem())
+        @JvmField
         val MAGMA_JELLY: Item = add("magma_jelly", StingerOPollenItem())
+        @JvmField
+        val UNFINISHED_SYMPHONY: Item = add("unfinished_symphony", StingerOPollenItem())
 
         fun init() {
             for ((key, value) in ITEMS) {

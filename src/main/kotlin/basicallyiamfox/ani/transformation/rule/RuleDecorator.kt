@@ -1,11 +1,12 @@
 package basicallyiamfox.ani.transformation.rule
 
-import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.Identifier
+import net.minecraft.world.World
 
 open class RuleDecorator {
     lateinit var id: Identifier
 
-    fun update(playerEntity: ServerPlayerEntity) {
+    open fun update(world: World, player: PlayerEntity) {
     }
 }

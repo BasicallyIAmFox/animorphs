@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "chance": 8184.0,
+          "condition": "animorphs:magma_jelly",
+          "divider": 100000.0
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "animorphs:magma_jelly"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

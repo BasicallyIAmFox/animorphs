@@ -4,10 +4,10 @@ import basicallyiamfox.ani.json.JsonFunctions
 import basicallyiamfox.ani.json.JsonSerializer
 import basicallyiamfox.ani.packet.PacketFunctions
 import basicallyiamfox.ani.packet.PacketSender
-import basicallyiamfox.ani.transformation.rule.decorator.ImmuneDamageTypeRuleDecorator
-import basicallyiamfox.ani.transformation.rule.decorator.StatusEffectRuleDecorator
+import basicallyiamfox.ani.transformation.rule.decorator.*
 import basicallyiamfox.ani.util.Action
-import basicallyiamfox.ani.util.Func
+import basicallyiamfox.ani.util.Func2
+import basicallyiamfox.ani.util.Func3
 import com.google.gson.JsonObject
 import net.minecraft.entity.damage.DamageType
 import net.minecraft.entity.effect.StatusEffect
@@ -19,18 +19,18 @@ import java.util.function.Function
 
 class RuleDecorators {
     companion object {
-        val key = RegistryKey.ofRegistry<JsonFunctions<out RuleDecorator, JsonObject>>(Identifier("animorphs:rule_decorator"))
-        val registry = Registries.create(key) { null!! }
-        val key2 = RegistryKey.ofRegistry<PacketFunctions<out RuleDecorator>>(Identifier("animorphs:rule_decorator_packet"))
-        val registry2 = Registries.create(key2) { null!! }
+        val key: RegistryKey<Registry<JsonFunctions<out RuleDecorator, JsonObject>>> = RegistryKey.ofRegistry(Identifier("animorphs:rule_decorator"))
+        val registry: Registry<JsonFunctions<out RuleDecorator, JsonObject>> = Registries.create(key) { null!! }
+        val key2: RegistryKey<Registry<PacketFunctions<out RuleDecorator>>> = RegistryKey.ofRegistry(Identifier("animorphs:rule_decorator_packet"))
+        val registry2: Registry<PacketFunctions<out RuleDecorator>> = Registries.create(key2) { null!! }
 
         private inline fun <reified T : RuleDecorator> commonObj(): JsonFunctions<T, JsonObject> = object :
             JsonFunctions<T, JsonObject>(
-                Action { inst, obj ->
-                    obj.add("decorator", JsonSerializer.toJson<T, JsonObject>(inst))
+                Func2 { inst ->
+                    return@Func2 JsonSerializer.toJson<T, JsonObject>(inst)
                 },
-                Func { _, obj ->
-                    return@Func JsonSerializer.fromJson<T, JsonObject>(obj)
+                Func3 { _, obj ->
+                    return@Func3 JsonSerializer.fromJson<T, JsonObject>(obj)
                 }
             ) { }
         private inline fun <reified T : RuleDecorator> commonObj2(): PacketFunctions<T> = object :
@@ -43,16 +43,11 @@ class RuleDecorators {
                 }
             ) { }
 
-        private val statusEffect = register(
-            Identifier("animorphs:status_effect"),
-            commonObj<StatusEffectRuleDecorator>(),
-            commonObj2()
-        )
-        private val immuneDamageType = register(
-            Identifier("animorphs:immune_damage_type"),
-            commonObj<ImmuneDamageTypeRuleDecorator>(),
-            commonObj2()
-        )
+        private val statusEffect = register(StatusEffectRuleDecorator.ID, commonObj<StatusEffectRuleDecorator>(), commonObj2())
+        private val immuneDamageType = register(ImmuneDamageTypeRuleDecorator.ID, commonObj<ImmuneDamageTypeRuleDecorator>(), commonObj2())
+        private val beefly = register(BeeflyRuleDecorator.ID, commonObj<BeeflyRuleDecorator>(), commonObj2())
+        private val noteTick = register(NoteTickRuleDecorator.ID, commonObj<NoteTickRuleDecorator>(), commonObj2())
+        private val magmaticJump = register(MagmaticJumpRuleDecorator.ID, commonObj<MagmaticJumpRuleDecorator>(), commonObj2())
 
         fun effectDecorator(statusEffect: StatusEffect): StatusEffectRuleDecorator {
             return StatusEffectRuleDecorator(statusEffect)

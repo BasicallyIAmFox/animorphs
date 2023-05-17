@@ -1,7 +1,17 @@
 {
-  "color": -1326528,
+  "color": 15450688,
   "description": "animorphs.ability.animorphs.desc.beefly",
   "id": "animorphs:beefly",
   "key": "animorphs.ability.animorphs.name.beefly",
+  "rules": [
+    {
+      "decorator": {
+        "id": "animorphs:beefly",
+        "maxSpeed": 0.0796,
+        "minSpeed": 0.077,
+        "startAt": 30
+      }
+    }
+  ],
   "sign": "POSITIVE"
 }

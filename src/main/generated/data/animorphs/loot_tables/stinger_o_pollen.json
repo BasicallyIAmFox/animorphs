@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "capped_chance": 0.035,
+          "comparison_multiplier": 1.0E-4,
+          "condition": "animorphs:stinger_o_pollen",
+          "default_divider": 1.0E9,
+          "divide_by_number_every_x_ticks": 72000,
+          "divider": 10,
+          "minimum_divider": 100.0,
+          "undivided_chance": 635.0
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "animorphs:stinger_o_pollen"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

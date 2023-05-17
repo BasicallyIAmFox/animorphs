@@ -5,7 +5,8 @@
   "rules": [
     {
       "decorator": {
-        "effect": "minecraft:jump_boost",
+        "amplifier": 0,
+        "effect": "minecraft:slowness",
         "id": "animorphs:status_effect"
       }
     }

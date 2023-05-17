@@ -5,6 +5,7 @@
   "rules": [
     {
       "decorator": {
+        "amplifier": 0,
         "effect": "minecraft:jump_boost",
         "id": "animorphs:status_effect"
       }

@@ -2,6 +2,7 @@ package basicallyiamfox.ani.mixin;
 
 import basicallyiamfox.ani.ExtensionsKt;
 import basicallyiamfox.ani.cache.item.TooltipCache;
+import basicallyiamfox.ani.interfaces.IPlayerEntity;
 import basicallyiamfox.ani.item.TransformationItem;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
@@ -43,17 +44,16 @@ public abstract class ItemStackMixin {
 
     @Shadow public abstract NbtCompound getOrCreateNbt();
 
-    @Unique
     @ModifyVariable(method = "getTooltip", at = @At(value = "STORE", ordinal = 0), index = 3)
-    private List saveList(List list, @Share("list") LocalRef<List<Text>> listRef) {
+    private List animorphs$saveListRef(List list, @Share("list") LocalRef<List<Text>> listRef) {
         listRef.set(list);
         return list;
     }
 
     @Inject(method = "getName", at = @At(value = "RETURN"))
-    private void animorphs$onGetName(CallbackInfoReturnable<Text> cir) {
-        if (ExtensionsKt.getTransformationManager().getTypeByItemId().containsKey(Registries.ITEM.getId(getItem()))) {
-            var color = ExtensionsKt.getTransformationManager().get(getItem()).getColor();
+    private void animorphs$changeNameColor(CallbackInfoReturnable<Text> cir) {
+        if (ExtensionsKt.getClientTransformationManager().getTypeByItemId().containsKey(Registries.ITEM.getId(getItem()))) {
+            var color = ExtensionsKt.getClientTransformationManager().get(getItem()).getColor();
             if (color == null) {
                 return;
             }
@@ -62,9 +62,9 @@ public abstract class ItemStackMixin {
     }
 
     @Inject(method = "toHoverableText", at = @At(value = "RETURN"))
-    private void animorphs$toHoverableText(CallbackInfoReturnable<Text> cir) {
-        if (ExtensionsKt.getTransformationManager().getTypeByItemId().containsKey(Registries.ITEM.getId(getItem()))) {
-            var color = ExtensionsKt.getTransformationManager().get(getItem()).getColor();
+    private void animorphs$changeHoverNameColor(CallbackInfoReturnable<Text> cir) {
+        if (ExtensionsKt.getClientTransformationManager().getTypeByItemId().containsKey(Registries.ITEM.getId(getItem()))) {
+            var color = ExtensionsKt.getClientTransformationManager().get(getItem()).getColor();
             if (color == null) {
                 return;
             }
@@ -73,9 +73,9 @@ public abstract class ItemStackMixin {
     }
 
     @ModifyVariable(method = "getTooltip", at = @At(value = "STORE", ordinal = 0))
-    private MutableText animorphs$injectTooltip(MutableText orig) {
-        if (ExtensionsKt.getTransformationManager().getTypeByItemId().containsKey(Registries.ITEM.getId(getItem()))) {
-            var color = ExtensionsKt.getTransformationManager().get(getItem()).getColor();
+    private MutableText animorphs$changeNameColor2(MutableText orig) {
+        if (ExtensionsKt.getClientTransformationManager().getTypeByItemId().containsKey(Registries.ITEM.getId(getItem()))) {
+            var color = ExtensionsKt.getClientTransformationManager().get(getItem()).getColor();
             if (color == null) {
                 return orig;
             }
@@ -84,39 +84,36 @@ public abstract class ItemStackMixin {
         return orig;
     }
 
-    @Unique
     @Inject(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getHideFlags()I"))
-    private void animorphs$getTooltip1(PlayerEntity player,
+    private void animorphs$addDescriptionAndAbilitiesList(PlayerEntity player,
                                        TooltipContext context,
                                        CallbackInfoReturnable<List<Text>> cir,
                                        @Share("list") LocalRef<List<Text>> listRef,
                                        @Share("transformItem") LocalBooleanRef transformItemRef) {
-        transformItemRef.set(player != null && ExtensionsKt.getTransformationManager().getTypeByItemId().containsKey(Registries.ITEM.getId(getItem())));
+        transformItemRef.set(player != null && ExtensionsKt.getClientTransformationManager().getTypeByItemId().containsKey(Registries.ITEM.getId(getItem())));
         if (!transformItemRef.get()) {
             return;
         }
 
-        var transformation = ExtensionsKt.getTransformationManager().get(getItem());
+        var transformation = ExtensionsKt.getClientTransformationManager().get(getItem());
 
-        if (transformation.getColor() != null) {
-            var list = listRef.get();
-            list.set(0, list.get(0).copy().setStyle(Style.EMPTY.withColor(transformation.getColor())));
+        var descList = TooltipCache.loadDescForItem(getItem(), transformation);
+        if (descList.size() > 0) {
+            listRef.get().addAll(descList);
+            listRef.get().add(Text.empty());
         }
 
         if (Screen.hasShiftDown()) {
             var cacheList = TooltipCache.loadForItem(getItem(), transformation);
-            for (var line : cacheList) {
-                listRef.get().add(line);
-            }
+            listRef.get().addAll(cacheList);
         }
         else {
             listRef.get().add(Text.translatable("animorphs.tooltip.animorphs.hold_shift_to_show"));
         }
     }
 
-    @Unique
     @Inject(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isSectionVisible(ILnet/minecraft/item/ItemStack$TooltipSection;)Z", ordinal = 4))
-    private void animorphs$getTooltip2(PlayerEntity player,
+    private void animorphs$addVisualActiveTooltip(PlayerEntity player,
                                        TooltipContext context,
                                        CallbackInfoReturnable<List<Text>> cir,
                                        @Share("list") LocalRef<List<Text>> listRef,
@@ -133,10 +130,9 @@ public abstract class ItemStackMixin {
         listRef.get().add(text);
     }
 
-    @Unique
     @Inject(method = "use", at = @At(value = "HEAD"))
-    private void animorphs$use(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
-        if (!world.isClient || !ExtensionsKt.getTransformationManager().getTypeByItemId().containsKey(Registries.ITEM.getId(getItem())))
+    private void animorphs$switchVisualActiveKey(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
+        if (!world.isClient || !ExtensionsKt.getTransformationManager(user).getTypeByItemId().containsKey(Registries.ITEM.getId(getItem())))
             return;
 
         user.getStackInHand(hand).getOrCreateNbt().putBoolean(
@@ -145,14 +141,22 @@ public abstract class ItemStackMixin {
         );
     }
 
-    @Unique
     @Inject(method = "inventoryTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/Item;inventoryTick(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Lnet/minecraft/entity/Entity;IZ)V"))
-    private void animorphs$inventoryTick(World world, Entity entity, int slot, boolean selected, CallbackInfo ci) {
-        if (!world.isClient || !ExtensionsKt.getTransformationManager().getTypeByItemId().containsKey(Registries.ITEM.getId(getItem())))
-            return;
+    private void animorphs$addVisualActiveKeyAndSetActiveTransformation(World world, Entity entity, int slot, boolean selected, CallbackInfo ci) {
+        if (entity instanceof PlayerEntity) {
+            var manager = ExtensionsKt.getTransformationManager((PlayerEntity)entity);
+            if (manager == null) return;
 
-        if (nbt == null || nbt.isEmpty() || !nbt.contains(TransformationItem.VISUAL_ACTIVE_KEY)) {
-            getOrCreateNbt().putBoolean(TransformationItem.VISUAL_ACTIVE_KEY, true);
+            var trans = manager.get(getItem());
+            if (trans == null) return;
+
+            if (nbt == null || nbt.isEmpty() || !nbt.contains(TransformationItem.VISUAL_ACTIVE_KEY)) {
+                getOrCreateNbt().putBoolean(TransformationItem.VISUAL_ACTIVE_KEY, true);
+            }
+
+            var duck = (IPlayerEntity)entity;
+            duck.setActiveTransformation(trans.getId());
+            duck.setTransformationItem((ItemStack)(Object)this);
         }
     }
 }

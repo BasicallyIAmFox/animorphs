@@ -4,9 +4,8 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
 
 interface IPlayerEntity {
-    fun getTransformationItem(): ItemStack?
-    fun setTransformationItem(itemStack: ItemStack?)
+    val damageTypesImmunities: MutableList<Identifier>
 
-    fun getActiveTransformation(): Identifier?
-    fun setActiveTransformation(id: Identifier?)
+    var transformationItem: ItemStack?
+    var activeTransformation: Identifier?
 }

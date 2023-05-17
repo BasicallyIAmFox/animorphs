@@ -1,0 +1,17 @@
+{
+  "abilities": [
+    "animorphs:note_tick"
+  ],
+  "color": 7853824,
+  "description": [
+    "animorphs.transformation.animorphs.desc.note_block.0",
+    "animorphs.transformation.animorphs.desc.note_block.1",
+    "animorphs.transformation.animorphs.desc.note_block.2",
+    "animorphs.transformation.animorphs.desc.note_block.3",
+    "animorphs.transformation.animorphs.desc.note_block.4"
+  ],
+  "id": "animorphs:note_block",
+  "item": "animorphs:unfinished_symphony",
+  "skin": "animorphs:textures/transformations/noteman.png",
+  "slim": "animorphs:textures/transformations/noteman_slim.png"
+}
