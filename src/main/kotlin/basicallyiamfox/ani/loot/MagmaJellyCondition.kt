@@ -25,7 +25,7 @@ class MagmaJellyCondition(
     }
 
     override fun getType(): LootConditionType {
-        return ContextConditionTypes.MAGMA_JELLY
+        return AniConditionTypes.MAGMA_JELLY
     }
 
     class Builder : LootCondition.Builder {

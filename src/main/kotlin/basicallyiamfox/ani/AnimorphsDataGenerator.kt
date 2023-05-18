@@ -1,25 +1,22 @@
 package basicallyiamfox.ani
 
+import basicallyiamfox.ani.core.Transformation
+import basicallyiamfox.ani.core.ability.Ability
+import basicallyiamfox.ani.core.condition.Condition
+import basicallyiamfox.ani.core.rule.Rule
 import basicallyiamfox.ani.datagen.FabricGenericProvider
+import basicallyiamfox.ani.decorator.condition.*
+import basicallyiamfox.ani.decorator.rule.*
+import basicallyiamfox.ani.extensions.addAbilityDesc
+import basicallyiamfox.ani.extensions.addAbilityName
+import basicallyiamfox.ani.extensions.addSelf
+import basicallyiamfox.ani.extensions.addTransDesc
 import basicallyiamfox.ani.item.AnimorphsItems
-import basicallyiamfox.ani.json.JsonSerializer
 import basicallyiamfox.ani.loot.AniLootTableIds
 import basicallyiamfox.ani.loot.MagmaJellyCondition
 import basicallyiamfox.ani.loot.StingerOPollenCondition
-import basicallyiamfox.ani.transformation.Transformation
-import basicallyiamfox.ani.transformation.ability.Ability
-import basicallyiamfox.ani.transformation.condition.Condition
-import basicallyiamfox.ani.transformation.condition.ConditionDecorators
-import basicallyiamfox.ani.transformation.condition.decorator.AndConditionDecorator
-import basicallyiamfox.ani.transformation.condition.decorator.BiomeTemperatureConditionDecorator
-import basicallyiamfox.ani.transformation.condition.decorator.LightLevelConditionDecorator
-import basicallyiamfox.ani.transformation.condition.decorator.OrConditionDecorator
-import basicallyiamfox.ani.transformation.rule.Rule
-import basicallyiamfox.ani.transformation.rule.RuleDecorators
-import basicallyiamfox.ani.transformation.rule.decorator.BeeflyRuleDecorator
-import basicallyiamfox.ani.transformation.rule.decorator.MagmaticJumpRuleDecorator
-import basicallyiamfox.ani.transformation.rule.decorator.NoteTickRuleDecorator
 import basicallyiamfox.ani.util.ComparisonOperator
+import basicallyiamfox.ani.util.StatModifier
 import com.google.gson.JsonObject
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
@@ -32,7 +29,6 @@ import net.minecraft.data.client.BlockStateModelGenerator
 import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.Models
 import net.minecraft.data.server.recipe.RecipeJsonProvider
-import net.minecraft.data.server.recipe.RecipeProvider
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder
 import net.minecraft.entity.damage.DamageType
 import net.minecraft.entity.damage.DamageTypes
@@ -46,8 +42,10 @@ import net.minecraft.recipe.book.RecipeCategory
 import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.tag.ItemTags
+import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
+import org.apache.commons.lang3.math.Fraction
 import java.awt.Color
 import java.lang.reflect.Modifier
 import java.util.function.BiConsumer
@@ -76,7 +74,9 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
     }
     class LangGenerator(output: FabricDataOutput) : FabricLanguageProvider(output, "en_us") {
         override fun generateTranslations(translationBuilder: TranslationBuilder?) {
-            translationBuilder!!.add(AnimorphsItems.STINGER_O_POLLEN, "Stinger o' Pollen")
+            translationBuilder!!.add(AnimorphsItems.GROUP, "Transformation items")
+
+            translationBuilder.add(AnimorphsItems.STINGER_O_POLLEN, "Stinger o' Pollen")
             translationBuilder.addTransDesc(
                 Identifier("animorphs:bee"),
                 arrayListOf<String>()
@@ -89,7 +89,7 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
                 Identifier("animorphs:magma_cube"),
                 arrayListOf<String>()
                     .addSelf("Turns you into a magma cube when in Nether.")
-                    .addSelf("Holding [SHIFT] allows to make really high jumps.")
+                    .addSelf("Grants ability to make really high jumps.")
                     .addSelf("Also increases fire resistance.")
             )
             translationBuilder.add(AnimorphsItems.UNFINISHED_SYMPHONY, "Unfinished Symphony")
@@ -103,19 +103,19 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
                     .addSelf("Movements will sometimes play sounds.")
             )
 
-            translationBuilder.addAbility(Identifier("animorphs:beefly"), "Beefly")
-            translationBuilder.addAbilityDesc(Identifier("animorphs:beefly"), "Allows to fly while holding [SPACE] button.")
+            translationBuilder.addAbilityName(Identifier("animorphs:beefly"), "Beefly")
+            translationBuilder.addAbilityDesc(Identifier("animorphs:beefly"), "Allows to fly while holding a special key.")
 
-            translationBuilder.addAbility(Identifier("animorphs:soft_wings"), "Soft Wings")
+            translationBuilder.addAbilityName(Identifier("animorphs:soft_wings"), "Soft Wings")
             translationBuilder.addAbilityDesc(Identifier("animorphs:soft_wings"), "You drown much faster.")
 
-            translationBuilder.addAbility(Identifier("animorphs:magmatic_jump"), "Magmatic Jump")
-            translationBuilder.addAbilityDesc(Identifier("animorphs:magmatic_jump"), "Holding [SHIFT] long enough will allow to jump high.")
+            translationBuilder.addAbilityName(Identifier("animorphs:magmatic_jump"), "Magmatic Jump")
+            translationBuilder.addAbilityDesc(Identifier("animorphs:magmatic_jump"), "Holding a special key for long enough will allow to jump high.")
 
-            translationBuilder.addAbility(Identifier("animorphs:wet_obsidian"), "Wet Obsidian")
+            translationBuilder.addAbilityName(Identifier("animorphs:wet_obsidian"), "Wet Obsidian")
             translationBuilder.addAbilityDesc(Identifier("animorphs:wet_obsidian"), "You take damage from touching water.")
 
-            translationBuilder.addAbility(Identifier("animorphs:note_tick"), "Note Tick")
+            translationBuilder.addAbilityName(Identifier("animorphs:note_tick"), "Note Tick")
             translationBuilder.addAbilityDesc(Identifier("animorphs:note_tick"), "Moving will occasionally play notes.")
 
             (DamageTypes::class.java.declaredFields).forEach { e ->
@@ -123,7 +123,7 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
                     return@forEach
 
                 val damageType = (e.get(null) as RegistryKey<DamageType>)
-                translationBuilder.addAbility(
+                translationBuilder.addAbilityName(
                     Identifier("animorphs:immune_to_${damageType.value.path}_damage"),
                     "Negates ${damageType.value.path.replace('_', ' ')} damage"
                 )
@@ -134,6 +134,9 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
             translationBuilder.add("animorphs.ability_sign.animorphs.positive", "[+]")
             translationBuilder.add("animorphs.ability_sign.animorphs.neutral", "[=]")
             translationBuilder.add("animorphs.ability_sign.animorphs.negative", "[-]")
+            translationBuilder.add("category.animorphs.keys", "Animorphs key binds")
+            translationBuilder.add("key.animorphs.beefly", "Bee Fly ability")
+            translationBuilder.add("key.animorphs.magma_jump", "Magmatic Jump ability")
         }
     }
     class TransformationGenerator(output: FabricDataOutput) : FabricGenericProvider<Transformation>("animorphs/transformations", output) {
@@ -160,7 +163,8 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
                     )
                     .addConditions(
                         arrayListOf<Condition>()
-                            .addSelf(Condition().setDecorator(
+                            .addSelf(
+                                Condition().setDecorator(
                                 OrConditionDecorator(
                                     LightLevelConditionDecorator(ComparisonOperator.greater, 7),
                                     AndConditionDecorator(
@@ -223,17 +227,22 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
 
         override fun getId(type: Transformation): Identifier = type.id
 
-        override fun toJson(type: Transformation): JsonObject = JsonSerializer.toJson(type)
+        override fun toJson(type: Transformation): JsonObject {
+            val obj = JsonObject()
+            Transformation.Serializer.toJson(obj, type)
+            return obj
+        }
 
         override fun getName(): String = "Animorphs/Transformations"
     }
     class AbilityGenerator(output: FabricDataOutput) : FabricGenericProvider<Ability>("animorphs/abilities", output) {
         override fun generateTypes(consumer: Consumer<Ability?>?) {
             Consumer<Consumer<Ability?>?> { t ->
-                t.accept(Ability()
+                t.accept(
+                    Ability()
                     .setId(Identifier("animorphs:beefly"))
                     .setName("animorphs.ability.animorphs.name.beefly")
-                    .setColor(Color(235, 194, 64))
+                    .setColor(Color(238, 196, 65))
                     .setSign(Ability.Sign.POSITIVE)
                     .setDesc(arrayListOf<String>().addSelf("animorphs.ability.animorphs.desc.beefly"))
                     .addRules(
@@ -241,21 +250,32 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
                             .addSelf(Rule().setDecorator(BeeflyRuleDecorator(0.077f, 0.0796f, 30)))
                     )
                 )
-                t.accept(Ability()
+                t.accept(
+                    Ability()
                     .setId(Identifier("animorphs:soft_wings"))
                     .setName("animorphs.ability.animorphs.name.soft_wings")
-                    .setColor(Color(217, 231, 252))
+                    .setColor(Color(220, 234, 255))
                     .setSign(Ability.Sign.NEGATIVE)
                     .setDesc(arrayListOf<String>().addSelf("animorphs.ability.animorphs.desc.soft_wings"))
                     .addRules(
                         arrayListOf<Rule>()
+                            .addSelf(Rule()
+                                .addConditions(
+                                    arrayListOf<Condition>()
+                                        .addSelf(Condition().setDecorator(BeingRainedOnConditionDecorator()))
+                                        .addSelf(Condition().setDecorator(DamagePlayerConditionDecorator(DamageTypes.DROWN, 0.5f)))
+                                )
+                                .setDecorator(PlaySoundRuleDecorator(SoundEvents.ENTITY_PLAYER_HURT_DROWN, 0.4f, 2.0f))
+                            )
+                            .addSelf(Rule().setDecorator(ModifyAirGenerationRuleDecorator(-7)))
                     )
                 )
 
-                t.accept(Ability()
+                t.accept(
+                    Ability()
                     .setId(Identifier("animorphs:magmatic_jump"))
                     .setName("animorphs.ability.animorphs.name.magmatic_jump")
-                    .setColor(Color(195, 92, 24))
+                    .setColor(Color(197, 93, 24))
                     .setSign(Ability.Sign.POSITIVE)
                     .setDesc(arrayListOf<String>().addSelf("animorphs.ability.animorphs.desc.magmatic_jump"))
                     .addRules(
@@ -263,26 +283,38 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
                             .addSelf(Rule().setDecorator(MagmaticJumpRuleDecorator(100, 175)))
                     )
                 )
-                t.accept(Ability()
+                t.accept(
+                    Ability()
                     .setId(Identifier("animorphs:wet_obsidian"))
                     .setName("animorphs.ability.animorphs.name.wet_obsidian")
-                    .setColor(Color(97, 77, 97))
+                    .setColor(Color(98, 78, 98))
                     .setSign(Ability.Sign.NEGATIVE)
                     .setDesc(arrayListOf<String>().addSelf("animorphs.ability.animorphs.desc.wet_obsidian"))
                     .addRules(
                         arrayListOf<Rule>()
+                            .addSelf(Rule()
+                                .addConditions(
+                                    arrayListOf<Condition>()
+                                        .addSelf(Condition().setDecorator(IsTouchingWaterOrRainConditionDecorator()))
+                                        .addSelf(Condition().setDecorator(DamagePlayerConditionDecorator(DamageTypes.DROWN, 1.0f + Fraction.ONE_THIRD.toFloat())))
+                                )
+                                .setDecorator(PlaySoundRuleDecorator(SoundEvents.ENTITY_PLAYER_HURT_DROWN, 0.4f, 2.0f))
+                            )
+                            .addSelf(Rule().setDecorator(ModifyAirGenerationRuleDecorator(-2)))
+                            .addSelf(Rule().setDecorator(ModifyDamageReceivedRuleDecorator(DamageTypes.DROWN, StatModifier(0f, 1f, 3f, 0f))))
                     )
                 )
 
-                t.accept(Ability()
+                t.accept(
+                    Ability()
                     .setId(Identifier("animorphs:note_tick"))
                     .setName("animorphs.ability.animorphs.name.note_tick")
-                    .setColor(Color(235, 194, 64))
+                    .setColor(Color(119, 215, 0))
                     .setSign(Ability.Sign.POSITIVE)
                     .setDesc(arrayListOf<String>().addSelf("animorphs.ability.animorphs.desc.note_tick"))
                     .addRules(
                         arrayListOf<Rule>()
-                            .addSelf(Rule().setDecorator(NoteTickRuleDecorator()))
+                            .addSelf(Rule().setDecorator(NoteTickRuleDecorator(10)))
                     )
                 )
 
@@ -291,7 +323,8 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
                         return@forEach
 
                     val damageType = (e.get(null) as RegistryKey<DamageType>)
-                    t.accept(Ability()
+                    t.accept(
+                        Ability()
                         .setId(Identifier("animorphs:immune_to_${damageType.value.path}_damage"))
                         .setName("animorphs.ability.animorphs.name.immune_to_${damageType.value.path}_damage")
                         .setSign(Ability.Sign.POSITIVE)
@@ -304,7 +337,8 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
                 }
 
                 Registries.STATUS_EFFECT.entrySet.forEach { e ->
-                    t.accept(Ability()
+                    t.accept(
+                        Ability()
                         .setId(Identifier("animorphs:${e.key.value.path}_status_effect"))
                         .setSign(if (e.value.isBeneficial) Ability.Sign.POSITIVE else Ability.Sign.NEGATIVE)
                         .setName(e.value.translationKey)
@@ -321,7 +355,11 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
 
         override fun getId(type: Ability): Identifier = type.id
 
-        override fun toJson(type: Ability): JsonObject = JsonSerializer.toJson(type)
+        override fun toJson(type: Ability): JsonObject {
+            val obj = JsonObject()
+            Ability.Serializer.toJson(obj, type)
+            return obj
+        }
 
         override fun getName(): String = "Animorphs/Abilities"
     }
@@ -334,7 +372,7 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
                 .pattern("###")
                 .pattern("#N#")
                 .pattern("###")
-                .criterion("has_note_block", RecipeProvider.conditionsFromItem(Items.NOTE_BLOCK))
+                .criterion(hasItem(Items.NOTE_BLOCK), conditionsFromItem(Items.NOTE_BLOCK))
                 .offerTo(exporter)
         }
     }

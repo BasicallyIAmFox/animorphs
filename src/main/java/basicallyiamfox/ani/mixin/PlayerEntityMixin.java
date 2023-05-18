@@ -1,13 +1,14 @@
 package basicallyiamfox.ani.mixin;
 
-import basicallyiamfox.ani.ExtensionsKt;
+import basicallyiamfox.ani.extensions._LivingEntityKt;
 import basicallyiamfox.ani.interfaces.IPlayerEntity;
+import basicallyiamfox.ani.util.StatModifier;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
@@ -16,16 +17,19 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerEntity {
     @Unique
-    private List<Identifier> damageTypesImmunities = new ArrayList<>();
+    private Map<Identifier, Boolean> damageTypesImmunities = new HashMap<>();
+    @Unique
+    private Map<Identifier, StatModifier> damageTypeModifiers = new HashMap<>();
     @Unique
     @Nullable
     private ItemStack transformationItem;
@@ -37,34 +41,55 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerE
         super(entityType, world);
     }
 
-    @Inject(method = "tickMovement", at = @At("HEAD"))
+    @Inject(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerInventory;updateItems()V"))
     private void animorphs$clearTransformations(CallbackInfo ci) {
         damageTypesImmunities.clear();
+        damageTypeModifiers.clear();
         setActiveTransformation(null);
         setTransformationItem(null);
     }
 
-    @Inject(method = "tickMovement", at = @At("TAIL"))
+    @Inject(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerInventory;updateItems()V", shift = At.Shift.AFTER))
     private void animorphs$tickTransformation(CallbackInfo ci) {
         if (getActiveTransformation() == null) return;
 
-        ExtensionsKt.getTransformationManager(this).get(getActiveTransformation()).tick(world, (PlayerEntity) (Object) this);
+        _LivingEntityKt.getTransformationManager(this).get(getActiveTransformation()).tick(world, (PlayerEntity) (Object) this);
     }
 
     @Inject(method = "isInvulnerableTo", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isInvulnerableTo(Lnet/minecraft/entity/damage/DamageSource;)Z"), cancellable = true)
     private void animorphs$isImmuneTo(DamageSource damageSource, CallbackInfoReturnable<Boolean> cir) {
-        for (var id : damageTypesImmunities) {
-            if (damageSource.getTypeRegistryEntry().matchesId(id)) {
-                cir.setReturnValue(true);
-                break;
-            }
+        if (damageTypesImmunities.containsKey(world.getRegistryManager().get(RegistryKeys.DAMAGE_TYPE).getId(damageSource.getType()))) {
+            cir.setReturnValue(true);
         }
+    }
+
+    private float animorphs$damageValue(float amount, DamageSource source) {
+        var id = world.getRegistryManager().get(RegistryKeys.DAMAGE_TYPE).getId(source.getType());
+        if (damageTypeModifiers.containsKey(id)) {
+            return damageTypeModifiers.get(id).applyTo(amount);
+        }
+        return amount;
+    }
+
+    @ModifyVariable(method = "damage", at = @At("HEAD"), ordinal = 0, argsOnly = true)
+    private float animorphs$modifyDamageValue(float amount, DamageSource source) {
+        return animorphs$damageValue(amount, source);
+    }
+    @ModifyVariable(method = "applyDamage", at = @At("HEAD"), ordinal = 0, argsOnly = true)
+    private float animorphs$modifyAppliedDamageValue(float amount, DamageSource source) {
+        return animorphs$damageValue(amount, source);
     }
 
     @NotNull
     @Override
-    public List<Identifier> getDamageTypesImmunities() {
+    public Map<Identifier, Boolean> getDamageTypesImmunities() {
         return damageTypesImmunities;
+    }
+
+    @NotNull
+    @Override
+    public Map<Identifier, StatModifier> getDamageTypeModifiers() {
+        return damageTypeModifiers;
     }
 
     @Unique
@@ -73,7 +98,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerE
     public ItemStack getTransformationItem() {
         return transformationItem;
     }
-
     @Unique
     @Override
     public void setTransformationItem(@Nullable ItemStack transformationItem) {
@@ -86,7 +110,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerE
     public Identifier getActiveTransformation() {
         return activeTransformation;
     }
-
     @Unique
     @Override
     public void setActiveTransformation(@Nullable Identifier activeTransformation) {

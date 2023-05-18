@@ -1,7 +1,7 @@
 package basicallyiamfox.ani.cache.item
 
-import basicallyiamfox.ani.getClientAbilityManager
-import basicallyiamfox.ani.transformation.Transformation
+import basicallyiamfox.ani.core.Transformation
+import basicallyiamfox.ani.extensions.getClientAbilityManager
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.item.Item
@@ -57,6 +57,8 @@ class TooltipCache {
                         list.add(text.append(Text.literal("Unable to load ability: ").append(Text.translatable(a.toTranslationKey()))))
                         continue
                     }
+
+                    if (!ability.visible) continue
 
                     text = text.append(
                         (Text.translatable(ability.sign.text).append(Text.literal(" ")))

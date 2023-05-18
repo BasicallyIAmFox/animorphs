@@ -5,7 +5,7 @@
   "rules": [
     {
       "decorator": {
-        "damageType": "minecraft:falling_anvil",
+        "type": "minecraft:falling_anvil",
         "id": "animorphs:immune_damage_type"
       }
     }

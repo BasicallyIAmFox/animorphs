@@ -1,6 +1,6 @@
 {
-  "animorphs.ability.animorphs.desc.beefly": "Allows to fly while holding [SPACE] button.",
-  "animorphs.ability.animorphs.desc.magmatic_jump": "Holding [SHIFT] long enough will allow to jump high.",
+  "animorphs.ability.animorphs.desc.beefly": "Allows to fly while holding a special key.",
+  "animorphs.ability.animorphs.desc.magmatic_jump": "Holding a special key for long enough will allow to jump high.",
   "animorphs.ability.animorphs.desc.note_tick": "Moving will occasionally play notes.",
   "animorphs.ability.animorphs.desc.soft_wings": "You drown much faster.",
   "animorphs.ability.animorphs.desc.wet_obsidian": "You take damage from touching water.",
@@ -60,14 +60,18 @@
   "animorphs.transformation.animorphs.desc.bee.1": "Grants ability to slowly fly up.",
   "animorphs.transformation.animorphs.desc.bee.2": "Also increases your stats when werebee.",
   "animorphs.transformation.animorphs.desc.magma_cube.0": "Turns you into a magma cube when in Nether.",
-  "animorphs.transformation.animorphs.desc.magma_cube.1": "Holding [SHIFT] allows to make really high jumps.",
+  "animorphs.transformation.animorphs.desc.magma_cube.1": "Grants ability to make really high jumps.",
   "animorphs.transformation.animorphs.desc.magma_cube.2": "Also increases fire resistance.",
   "animorphs.transformation.animorphs.desc.note_block.0": "'Flapping my arms I began to cluck,",
   "animorphs.transformation.animorphs.desc.note_block.1": "look at me, I'm the disco duck.'",
   "animorphs.transformation.animorphs.desc.note_block.2": "",
   "animorphs.transformation.animorphs.desc.note_block.3": "Turns you into a note block.",
   "animorphs.transformation.animorphs.desc.note_block.4": "Movements will sometimes play sounds.",
+  "category.animorphs.keys": "Animorphs key binds",
   "item.animorphs.magma_jelly": "Magma Jelly",
   "item.animorphs.stinger_o_pollen": "Stinger o' Pollen",
-  "item.animorphs.unfinished_symphony": "Unfinished Symphony"
+  "item.animorphs.unfinished_symphony": "Unfinished Symphony",
+  "itemGroup.animorphs.transformations_group": "Transformation items",
+  "key.animorphs.beefly": "Bee Fly ability",
+  "key.animorphs.magma_jump": "Magmatic Jump ability"
 }

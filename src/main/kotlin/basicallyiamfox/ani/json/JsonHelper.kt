@@ -1,5 +1,6 @@
 package basicallyiamfox.ani.json
 
+import basicallyiamfox.ani.util.StatModifier
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
@@ -29,6 +30,26 @@ inline fun <reified E : Enum<E>> JsonObject.asEnum(name: String, defaultValue: E
     enumValueOf(getString(name))
 } catch (_: Exception) {
     defaultValue
+}
+
+fun JsonObject.addProperty(property: String, value: StatModifier) {
+    val obj = JsonObject()
+    obj.addProperty("base", value.base)
+    obj.addProperty("additive", value.additive)
+    obj.addProperty("multiplicative", value.multiplicative)
+    obj.addProperty("flat", value.flat)
+    add(property, obj)
+}
+fun JsonObject.getStatModifier(property: String): StatModifier {
+    if (hasJsonObject(property)) {
+        val obj = getAsJsonObject(property)
+        val base = obj.getFloat("base", 0.0f)
+        val additive = obj.getFloat("additive", 1.0f)
+        val multiplicative = obj.getFloat("multiplicative", 1.0f)
+        val flat = obj.getFloat("flat", 0.0f)
+        return StatModifier(base, additive, multiplicative, flat)
+    }
+    throw JsonSyntaxException("Expected $property to be a Stat Modifier")
 }
 
 fun JsonObject.addProperty(property: String, value: Identifier) = addProperty(property, value.toString())

@@ -5,7 +5,7 @@
   "rules": [
     {
       "decorator": {
-        "damageType": "minecraft:cramming",
+        "type": "minecraft:cramming",
         "id": "animorphs:immune_damage_type"
       }
     }

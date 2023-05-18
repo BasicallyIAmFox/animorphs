@@ -5,7 +5,7 @@
   "rules": [
     {
       "decorator": {
-        "damageType": "minecraft:mob_attack",
+        "type": "minecraft:mob_attack",
         "id": "animorphs:immune_damage_type"
       }
     }

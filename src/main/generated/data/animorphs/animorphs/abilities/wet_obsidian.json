@@ -1,7 +1,49 @@
 {
-  "color": 6376801,
+  "color": 6442594,
   "description": "animorphs.ability.animorphs.desc.wet_obsidian",
   "id": "animorphs:wet_obsidian",
   "key": "animorphs.ability.animorphs.name.wet_obsidian",
+  "rules": [
+    {
+      "conditions": [
+        {
+          "decorator": {
+            "id": "animorphs:touching_water_or_rain"
+          }
+        },
+        {
+          "decorator": {
+            "damage_type": "minecraft:drown",
+            "damage_value": 1.3333334,
+            "id": "animorphs:damage_player"
+          }
+        }
+      ],
+      "decorator": {
+        "id": "animorphs:play_sound",
+        "pitch": 2.0,
+        "value": "minecraft:entity.player.hurt_drown",
+        "volume": 0.4
+      }
+    },
+    {
+      "decorator": {
+        "id": "animorphs:modify_air_generation",
+        "value": -2
+      }
+    },
+    {
+      "decorator": {
+        "damage_type": "minecraft:drown",
+        "id": "animorphs:modify_damage_received",
+        "value": {
+          "additive": 1.0,
+          "base": 0.0,
+          "flat": 0.0,
+          "multiplicative": 3.0
+        }
+      }
+    }
+  ],
   "sign": "NEGATIVE"
 }

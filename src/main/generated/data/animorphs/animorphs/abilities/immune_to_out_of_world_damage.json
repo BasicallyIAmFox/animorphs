@@ -5,7 +5,7 @@
   "rules": [
     {
       "decorator": {
-        "damageType": "minecraft:out_of_world",
+        "type": "minecraft:out_of_world",
         "id": "animorphs:immune_damage_type"
       }
     }

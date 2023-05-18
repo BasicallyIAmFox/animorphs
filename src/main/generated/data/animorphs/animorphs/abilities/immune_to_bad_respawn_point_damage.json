@@ -5,7 +5,7 @@
   "rules": [
     {
       "decorator": {
-        "damageType": "minecraft:bad_respawn_point",
+        "type": "minecraft:bad_respawn_point",
         "id": "animorphs:immune_damage_type"
       }
     }

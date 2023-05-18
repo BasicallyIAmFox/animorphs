@@ -5,7 +5,6 @@
   "rules": [
     {
       "decorator": {
-        "amplifier": 0,
         "effect": "minecraft:hero_of_the_village",
         "id": "animorphs:status_effect"
       }

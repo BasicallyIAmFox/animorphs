@@ -5,7 +5,7 @@
   "rules": [
     {
       "decorator": {
-        "damageType": "minecraft:starve",
+        "type": "minecraft:starve",
         "id": "animorphs:immune_damage_type"
       }
     }

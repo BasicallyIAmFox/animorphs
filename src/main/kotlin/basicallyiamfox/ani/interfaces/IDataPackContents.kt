@@ -1,7 +1,7 @@
 package basicallyiamfox.ani.interfaces
 
-import basicallyiamfox.ani.server.ServerAbilityLoader
-import basicallyiamfox.ani.server.ServerTransformationLoader
+import basicallyiamfox.ani.core.ServerTransformationLoader
+import basicallyiamfox.ani.core.ability.ServerAbilityLoader
 
 interface IDataPackContents {
     fun getServerTransformationLoader(): ServerTransformationLoader

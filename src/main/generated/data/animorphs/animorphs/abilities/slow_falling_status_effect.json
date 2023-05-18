@@ -5,7 +5,6 @@
   "rules": [
     {
       "decorator": {
-        "amplifier": 0,
         "effect": "minecraft:slow_falling",
         "id": "animorphs:status_effect"
       }

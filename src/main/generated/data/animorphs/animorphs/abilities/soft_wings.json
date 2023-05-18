@@ -1,7 +1,37 @@
 {
-  "color": 14280700,
+  "color": 14478079,
   "description": "animorphs.ability.animorphs.desc.soft_wings",
   "id": "animorphs:soft_wings",
   "key": "animorphs.ability.animorphs.name.soft_wings",
+  "rules": [
+    {
+      "conditions": [
+        {
+          "decorator": {
+            "id": "animorphs:being_rained_on"
+          }
+        },
+        {
+          "decorator": {
+            "damage_type": "minecraft:drown",
+            "damage_value": 0.5,
+            "id": "animorphs:damage_player"
+          }
+        }
+      ],
+      "decorator": {
+        "id": "animorphs:play_sound",
+        "pitch": 2.0,
+        "value": "minecraft:entity.player.hurt_drown",
+        "volume": 0.4
+      }
+    },
+    {
+      "decorator": {
+        "id": "animorphs:modify_air_generation",
+        "value": -7
+      }
+    }
+  ],
   "sign": "NEGATIVE"
 }

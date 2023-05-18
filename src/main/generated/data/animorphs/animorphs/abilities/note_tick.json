@@ -1,12 +1,13 @@
 {
-  "color": 15450688,
+  "color": 7853824,
   "description": "animorphs.ability.animorphs.desc.note_tick",
   "id": "animorphs:note_tick",
   "key": "animorphs.ability.animorphs.name.note_tick",
   "rules": [
     {
       "decorator": {
-        "id": "animorphs:note_tick"
+        "id": "animorphs:note_tick",
+        "ticks_for_play": 10
       }
     }
   ],

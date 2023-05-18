@@ -1,6 +1,6 @@
 package basicallyiamfox.ani.mixin;
 
-import basicallyiamfox.ani.ExtensionsKt;
+import basicallyiamfox.ani.extensions.ExtensionsKt;
 import basicallyiamfox.ani.interfaces.IPlayerEntity;
 import basicallyiamfox.ani.item.TransformationItem;
 import com.mojang.authlib.GameProfile;
@@ -13,7 +13,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;

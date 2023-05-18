@@ -5,7 +5,6 @@
   "rules": [
     {
       "decorator": {
-        "amplifier": 0,
         "effect": "minecraft:saturation",
         "id": "animorphs:status_effect"
       }

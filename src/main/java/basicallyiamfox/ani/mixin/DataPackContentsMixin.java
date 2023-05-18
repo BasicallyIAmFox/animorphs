@@ -1,13 +1,11 @@
 package basicallyiamfox.ani.mixin;
 
+import basicallyiamfox.ani.core.ServerTransformationLoader;
+import basicallyiamfox.ani.core.ability.ServerAbilityLoader;
 import basicallyiamfox.ani.interfaces.IDataPackContents;
-import basicallyiamfox.ani.server.ServerAbilityLoader;
-import basicallyiamfox.ani.server.ServerTransformationLoader;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceReloader;
 import net.minecraft.server.DataPackContents;
-import net.minecraft.util.profiler.Profiler;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,8 +14,6 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 
 @Mixin(DataPackContents.class)
 public abstract class DataPackContentsMixin implements IDataPackContents {

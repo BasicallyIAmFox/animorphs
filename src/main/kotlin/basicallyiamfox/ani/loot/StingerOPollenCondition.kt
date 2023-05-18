@@ -1,15 +1,14 @@
 package basicallyiamfox.ani.loot
 
+import basicallyiamfox.ani.decorator.rule.BeeflyRuleDecorator.BeeflyPlayerEntity
 import basicallyiamfox.ani.json.getDouble
 import basicallyiamfox.ani.json.getFloat
 import basicallyiamfox.ani.json.getInt
-import basicallyiamfox.ani.transformation.rule.decorator.BeeflyRuleDecorator.BeeflyPlayerEntity
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonObject
 import com.google.gson.JsonSerializationContext
 import net.minecraft.loot.condition.LootCondition
 import net.minecraft.loot.condition.LootConditionType
-import net.minecraft.loot.condition.LootConditionTypes
 import net.minecraft.loot.context.LootContext
 import net.minecraft.util.JsonSerializer
 
@@ -24,10 +23,10 @@ class StingerOPollenCondition(
 ) : LootCondition {
 
     override fun test(t: LootContext?): Boolean {
-        val player = t!!.get(ContextParameters.THIS_PLAYER)
+        val player = t!!.get(AniContextParameters.THIS_PLAYER)
 
-        val duck = player as BeeflyPlayerEntity
-        val hours = duck.stingerTick / divideByXEveryYTicks
+        player as BeeflyPlayerEntity
+        val hours = player.stingerTick / divideByXEveryYTicks
         var divider = defaultDivider / (this.divider * hours)
         if (divider < minDivider) {
             divider = minDivider
@@ -41,7 +40,7 @@ class StingerOPollenCondition(
     }
 
     override fun getType(): LootConditionType {
-        return ContextConditionTypes.STINGER_O_POLLEN
+        return AniConditionTypes.STINGER_O_POLLEN
     }
 
     class Builder : LootCondition.Builder {
@@ -114,8 +113,8 @@ class StingerOPollenCondition(
         override fun fromJson(json: JsonObject?, context: JsonDeserializationContext?): StingerOPollenCondition {
             val builder = Builder()
             builder.setDivideByXEveryYTicks(json!!.getInt("divide_by_number_every_x_ticks"))
-            builder.setDefaultDivider(json.getDouble("defaultDivider"))
-            builder.setDivider(json.getInt("defaultDivider"))
+            builder.setDefaultDivider(json.getDouble("default_divider"))
+            builder.setDivider(json.getInt("divider"))
             builder.setUndividedChance(json.getFloat("undivided_chance"))
             builder.setMinDivider(json.getDouble("minimum_divider"))
             builder.setCapChance(json.getDouble("capped_chance"))

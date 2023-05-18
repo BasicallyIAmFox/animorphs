@@ -5,7 +5,6 @@
   "rules": [
     {
       "decorator": {
-        "amplifier": 0,
         "effect": "minecraft:mining_fatigue",
         "id": "animorphs:status_effect"
       }

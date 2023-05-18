@@ -5,7 +5,7 @@
   "rules": [
     {
       "decorator": {
-        "damageType": "minecraft:dry_out",
+        "type": "minecraft:dry_out",
         "id": "animorphs:immune_damage_type"
       }
     }

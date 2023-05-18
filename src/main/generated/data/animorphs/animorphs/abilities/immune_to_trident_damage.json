@@ -5,7 +5,7 @@
   "rules": [
     {
       "decorator": {
-        "damageType": "minecraft:trident",
+        "type": "minecraft:trident",
         "id": "animorphs:immune_damage_type"
       }
     }

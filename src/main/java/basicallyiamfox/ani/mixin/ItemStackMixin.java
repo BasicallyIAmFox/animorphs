@@ -1,7 +1,8 @@
 package basicallyiamfox.ani.mixin;
 
-import basicallyiamfox.ani.ExtensionsKt;
 import basicallyiamfox.ani.cache.item.TooltipCache;
+import basicallyiamfox.ani.extensions.ExtensionsKt;
+import basicallyiamfox.ani.extensions._LivingEntityKt;
 import basicallyiamfox.ani.interfaces.IPlayerEntity;
 import basicallyiamfox.ani.item.TransformationItem;
 import com.llamalad7.mixinextras.sugar.Share;
@@ -26,7 +27,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -43,12 +43,6 @@ public abstract class ItemStackMixin {
     @Shadow private @Nullable NbtCompound nbt;
 
     @Shadow public abstract NbtCompound getOrCreateNbt();
-
-    @ModifyVariable(method = "getTooltip", at = @At(value = "STORE", ordinal = 0), index = 3)
-    private List animorphs$saveListRef(List list, @Share("list") LocalRef<List<Text>> listRef) {
-        listRef.set(list);
-        return list;
-    }
 
     @Inject(method = "getName", at = @At(value = "RETURN"))
     private void animorphs$changeNameColor(CallbackInfoReturnable<Text> cir) {
@@ -82,6 +76,13 @@ public abstract class ItemStackMixin {
             return orig.setStyle(Style.EMPTY.withColor(color));
         }
         return orig;
+    }
+
+    @ModifyVariable(method = "getTooltip", at = @At(value = "STORE", ordinal = 0), index = 3)
+    private List animorphs$saveListRef(List list,
+                                       @Share("list") LocalRef<List<Text>> listRef) {
+        listRef.set(list);
+        return list;
     }
 
     @Inject(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getHideFlags()I"))
@@ -132,7 +133,7 @@ public abstract class ItemStackMixin {
 
     @Inject(method = "use", at = @At(value = "HEAD"))
     private void animorphs$switchVisualActiveKey(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
-        if (!world.isClient || !ExtensionsKt.getTransformationManager(user).getTypeByItemId().containsKey(Registries.ITEM.getId(getItem())))
+        if (!world.isClient || !_LivingEntityKt.getTransformationManager(user).getTypeByItemId().containsKey(Registries.ITEM.getId(getItem())))
             return;
 
         user.getStackInHand(hand).getOrCreateNbt().putBoolean(
@@ -144,7 +145,7 @@ public abstract class ItemStackMixin {
     @Inject(method = "inventoryTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/Item;inventoryTick(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Lnet/minecraft/entity/Entity;IZ)V"))
     private void animorphs$addVisualActiveKeyAndSetActiveTransformation(World world, Entity entity, int slot, boolean selected, CallbackInfo ci) {
         if (entity instanceof PlayerEntity) {
-            var manager = ExtensionsKt.getTransformationManager((PlayerEntity)entity);
+            var manager = _LivingEntityKt.getTransformationManager((PlayerEntity)entity);
             if (manager == null) return;
 
             var trans = manager.get(getItem());

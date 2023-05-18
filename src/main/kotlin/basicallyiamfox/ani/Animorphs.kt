@@ -1,22 +1,15 @@
 package basicallyiamfox.ani
 
+import basicallyiamfox.ani.decorator.condition.ConditionDecorators
+import basicallyiamfox.ani.decorator.rule.RuleDecorators
 import basicallyiamfox.ani.item.AnimorphsItems
-import basicallyiamfox.ani.json.Serializers
+import basicallyiamfox.ani.loot.AniConditionTypes
+import basicallyiamfox.ani.loot.AniContextParameters
 import basicallyiamfox.ani.packet.Networking
-import basicallyiamfox.ani.transformation.condition.ConditionDecorators
-import basicallyiamfox.ani.transformation.rule.RuleDecorators
 import net.fabricmc.api.ModInitializer
-import org.slf4j.LoggerFactory
-
 
 object Animorphs : ModInitializer {
-    private val logger = LoggerFactory.getLogger("animorphs")
-
-    private val lootTables = AnimorphsLootTables()
-
     override fun onInitialize() {
-        Serializers.init()
-
         RuleDecorators.init()
         ConditionDecorators.init()
 
@@ -24,6 +17,8 @@ object Animorphs : ModInitializer {
 
         AnimorphsItems.init()
 
-        lootTables.listen()
+        AniConditionTypes.init()
+        AniContextParameters.init()
+        AnimorphsLootTables.listen()
     }
 }

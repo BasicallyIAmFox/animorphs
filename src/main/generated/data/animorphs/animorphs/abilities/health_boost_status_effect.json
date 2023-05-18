@@ -5,7 +5,6 @@
   "rules": [
     {
       "decorator": {
-        "amplifier": 0,
         "effect": "minecraft:health_boost",
         "id": "animorphs:status_effect"
       }

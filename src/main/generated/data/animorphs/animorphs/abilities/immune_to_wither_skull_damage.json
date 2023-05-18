@@ -5,7 +5,7 @@
   "rules": [
     {
       "decorator": {
-        "damageType": "minecraft:wither_skull",
+        "type": "minecraft:wither_skull",
         "id": "animorphs:immune_damage_type"
       }
     }

@@ -5,7 +5,7 @@
   "rules": [
     {
       "decorator": {
-        "damageType": "minecraft:sweet_berry_bush",
+        "type": "minecraft:sweet_berry_bush",
         "id": "animorphs:immune_damage_type"
       }
     }

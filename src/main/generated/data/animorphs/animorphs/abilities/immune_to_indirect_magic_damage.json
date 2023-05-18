@@ -5,7 +5,7 @@
   "rules": [
     {
       "decorator": {
-        "damageType": "minecraft:indirect_magic",
+        "type": "minecraft:indirect_magic",
         "id": "animorphs:immune_damage_type"
       }
     }

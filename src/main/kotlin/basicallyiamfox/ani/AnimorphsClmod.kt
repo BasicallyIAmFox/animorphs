@@ -9,5 +9,7 @@ import net.fabricmc.api.Environment
 object AnimorphsClmod : ClientModInitializer {
     override fun onInitializeClient() {
         Networking.clinit()
+
+        AnimorphsKeybindings.init()
     }
 }

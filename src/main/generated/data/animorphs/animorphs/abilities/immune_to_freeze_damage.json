@@ -5,7 +5,7 @@
   "rules": [
     {
       "decorator": {
-        "damageType": "minecraft:freeze",
+        "type": "minecraft:freeze",
         "id": "animorphs:immune_damage_type"
       }
     }

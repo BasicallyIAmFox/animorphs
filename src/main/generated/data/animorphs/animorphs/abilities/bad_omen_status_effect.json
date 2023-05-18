@@ -5,7 +5,6 @@
   "rules": [
     {
       "decorator": {
-        "amplifier": 0,
         "effect": "minecraft:bad_omen",
         "id": "animorphs:status_effect"
       }

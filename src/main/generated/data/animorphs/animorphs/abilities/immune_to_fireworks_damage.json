@@ -5,7 +5,7 @@
   "rules": [
     {
       "decorator": {
-        "damageType": "minecraft:fireworks",
+        "type": "minecraft:fireworks",
         "id": "animorphs:immune_damage_type"
       }
     }

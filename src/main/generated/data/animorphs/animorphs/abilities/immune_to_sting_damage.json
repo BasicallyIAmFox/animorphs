@@ -5,7 +5,7 @@
   "rules": [
     {
       "decorator": {
-        "damageType": "minecraft:sting",
+        "type": "minecraft:sting",
         "id": "animorphs:immune_damage_type"
       }
     }
