@@ -80,7 +80,7 @@ public abstract class ItemStackMixin {
 
     @ModifyVariable(method = "getTooltip", at = @At(value = "STORE", ordinal = 0), index = 3)
     private List animorphs$saveListRef(List list,
-                                       @Share("list") LocalRef<List<Text>> listRef) {
+                                       @Share("animorphs$list") LocalRef<List<Text>> listRef) {
         listRef.set(list);
         return list;
     }
@@ -89,8 +89,8 @@ public abstract class ItemStackMixin {
     private void animorphs$addDescriptionAndAbilitiesList(PlayerEntity player,
                                        TooltipContext context,
                                        CallbackInfoReturnable<List<Text>> cir,
-                                       @Share("list") LocalRef<List<Text>> listRef,
-                                       @Share("transformItem") LocalBooleanRef transformItemRef) {
+                                       @Share("animorphs$list") LocalRef<List<Text>> listRef,
+                                       @Share("animorphs$transformItem") LocalBooleanRef transformItemRef) {
         transformItemRef.set(player != null && ExtensionsKt.getClientTransformationManager().getTypeByItemId().containsKey(Registries.ITEM.getId(getItem())));
         if (!transformItemRef.get()) {
             return;
@@ -117,8 +117,8 @@ public abstract class ItemStackMixin {
     private void animorphs$addVisualActiveTooltip(PlayerEntity player,
                                        TooltipContext context,
                                        CallbackInfoReturnable<List<Text>> cir,
-                                       @Share("list") LocalRef<List<Text>> listRef,
-                                       @Share("transformItem") LocalBooleanRef transformItemRef) {
+                                       @Share("animorphs$list") LocalRef<List<Text>> listRef,
+                                       @Share("animorphs$transformItem") LocalBooleanRef transformItemRef) {
         if (!transformItemRef.get())
             return;
 

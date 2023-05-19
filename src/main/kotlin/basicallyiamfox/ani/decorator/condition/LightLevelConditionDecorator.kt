@@ -2,10 +2,7 @@ package basicallyiamfox.ani.decorator.condition
 
 import basicallyiamfox.ani.core.condition.ConditionDecorator
 import basicallyiamfox.ani.core.serializer.ISerializer
-import basicallyiamfox.ani.json.addProperty
-import basicallyiamfox.ani.json.asEnum
-import basicallyiamfox.ani.json.getIdentifier
-import basicallyiamfox.ani.json.getInt
+import basicallyiamfox.ani.json.*
 import basicallyiamfox.ani.util.ComparisonOperator
 import com.google.gson.JsonObject
 import net.minecraft.entity.player.PlayerEntity
@@ -24,7 +21,7 @@ class LightLevelConditionDecorator() : ConditionDecorator() {
         override fun fromJson(obj: JsonObject): LightLevelConditionDecorator {
             val inst = LightLevelConditionDecorator()
             inst.id = obj.getIdentifier("id")
-            inst.operator = obj.asEnum("operator")
+            inst.operator = obj.getEnum("operator")
             inst.value = obj.getInt("compared")
             return inst
         }

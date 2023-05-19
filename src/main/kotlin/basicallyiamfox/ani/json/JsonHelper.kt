@@ -1,88 +1,12 @@
 package basicallyiamfox.ani.json
 
-import basicallyiamfox.ani.util.StatModifier
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
-import com.google.gson.JsonSyntaxException
 import net.minecraft.item.Item
-import net.minecraft.util.Identifier
 import net.minecraft.util.JsonHelper
 import java.math.BigDecimal
 import java.math.BigInteger
-
-// Own extension methods
-fun <E : Enum<E>> JsonObject.addProperty(property: String, value: E) = addProperty(property, value.name)
-inline fun <reified E : Enum<E>> JsonObject.hasEnum(element: String): Boolean {
-    if (!hasString(element)) {
-        return false
-    }
-    val name = getString(element)
-    return enumValues<E>().any { e -> e.name == name }
-}
-inline fun <reified E : Enum<E>> JsonObject.asEnum(name: String): E = try {
-    enumValueOf(getString(name))
-}
-catch (_: Exception) {
-    throw JsonSyntaxException("Expected " + name + " to be an Enum, was " + getType())
-}
-inline fun <reified E : Enum<E>> JsonObject.asEnum(name: String, defaultValue: E): E = try {
-    enumValueOf(getString(name))
-} catch (_: Exception) {
-    defaultValue
-}
-
-fun JsonObject.addProperty(property: String, value: StatModifier) {
-    val obj = JsonObject()
-    obj.addProperty("base", value.base)
-    obj.addProperty("additive", value.additive)
-    obj.addProperty("multiplicative", value.multiplicative)
-    obj.addProperty("flat", value.flat)
-    add(property, obj)
-}
-fun JsonObject.getStatModifier(property: String): StatModifier {
-    if (hasJsonObject(property)) {
-        val obj = getAsJsonObject(property)
-        val base = obj.getFloat("base", 0.0f)
-        val additive = obj.getFloat("additive", 1.0f)
-        val multiplicative = obj.getFloat("multiplicative", 1.0f)
-        val flat = obj.getFloat("flat", 0.0f)
-        return StatModifier(base, additive, multiplicative, flat)
-    }
-    throw JsonSyntaxException("Expected $property to be a Stat Modifier")
-}
-
-fun JsonObject.addProperty(property: String, value: Identifier) = addProperty(property, value.toString())
-fun JsonObject.hasIdentifier(element: String): Boolean {
-    if (!hasString(element)) {
-        return false
-    }
-    return Identifier.tryParse(getString(element)) != null
-}
-fun JsonElement.asIdentifier(name: String): Identifier = try {
-    Identifier(asString(name))
-}
-catch (_: Exception) {
-    throw JsonSyntaxException("Expected " + name + " to be an Identifier, was " + getType())
-}
-fun JsonElement.asIdentifier(name: String, defaultIdentifier: Identifier): Identifier = try {
-    Identifier(asString(name))
-}
-catch (_: Exception) {
-    defaultIdentifier
-}
-fun JsonObject.getIdentifier(name: String): Identifier = try {
-    Identifier(getString(name))
-}
-catch (_: Exception) {
-    throw JsonSyntaxException("Expected " + name + " to be an Identifier, was " + getType())
-}
-fun JsonObject.getIdentifier(name: String, defaultValue: Identifier): Identifier = try {
-    Identifier(getString(name))
-}
-catch (_: Exception) {
-    defaultValue
-}
 
 // Most methods as extensions from net.minecraft.util.JsonHelper
 fun JsonElement.isString(): Boolean = JsonHelper.isString(this)

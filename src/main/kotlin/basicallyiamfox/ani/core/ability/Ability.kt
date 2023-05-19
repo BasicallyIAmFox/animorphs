@@ -55,7 +55,7 @@ class Ability {
             val inst = Ability()
             inst.setId(obj.getIdentifier("id"))
             inst.setName(obj.getString("key"))
-            inst.setSign(obj.asEnum("sign"))
+            inst.setSign(obj.getEnum("sign"))
             inst.setColor(obj.getInt("color").or(0xFF000000.toInt()))
             if (obj.hasBoolean("is_visible")) {
                 inst.setVisible(obj.getBoolean("is_visible"))
