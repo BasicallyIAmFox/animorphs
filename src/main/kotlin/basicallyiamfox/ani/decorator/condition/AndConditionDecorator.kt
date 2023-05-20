@@ -3,10 +3,10 @@ package basicallyiamfox.ani.decorator.condition
 import basicallyiamfox.ani.core.condition.ConditionDecorator
 import basicallyiamfox.ani.core.serializer.ISerializer
 import basicallyiamfox.ani.core.serializer.TypeSerializers
+import basicallyiamfox.ani.extensions.addProperty
+import basicallyiamfox.ani.extensions.getArray
+import basicallyiamfox.ani.extensions.getIdentifier
 import basicallyiamfox.ani.extensions.toJsonArray
-import basicallyiamfox.ani.json.addProperty
-import basicallyiamfox.ani.json.getArray
-import basicallyiamfox.ani.json.getIdentifier
 import com.google.gson.JsonObject
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.network.PacketByteBuf

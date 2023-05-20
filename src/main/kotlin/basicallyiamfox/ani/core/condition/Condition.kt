@@ -2,9 +2,9 @@ package basicallyiamfox.ani.core.condition
 
 import basicallyiamfox.ani.core.serializer.ISerializer
 import basicallyiamfox.ani.core.serializer.TypeSerializers
-import basicallyiamfox.ani.json.getIdentifier
-import basicallyiamfox.ani.json.getObject
-import basicallyiamfox.ani.json.hasJsonObject
+import basicallyiamfox.ani.extensions.getIdentifier
+import basicallyiamfox.ani.extensions.getObject
+import basicallyiamfox.ani.extensions.hasJsonObject
 import com.google.gson.JsonObject
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.network.PacketByteBuf

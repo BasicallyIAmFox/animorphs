@@ -1,6 +1,6 @@
 package basicallyiamfox.ani.loot
 
-import basicallyiamfox.ani.json.getDouble
+import basicallyiamfox.ani.extensions.getDouble
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonObject
 import com.google.gson.JsonSerializationContext

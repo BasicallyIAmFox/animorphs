@@ -3,8 +3,7 @@ package basicallyiamfox.ani.core.rule
 import basicallyiamfox.ani.core.condition.Condition
 import basicallyiamfox.ani.core.serializer.ISerializer
 import basicallyiamfox.ani.core.serializer.TypeSerializers
-import basicallyiamfox.ani.extensions.toJsonArray
-import basicallyiamfox.ani.json.*
+import basicallyiamfox.ani.extensions.*
 import com.google.gson.JsonObject
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.network.PacketByteBuf

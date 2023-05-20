@@ -2,12 +2,8 @@ package basicallyiamfox.ani.decorator.rule
 
 import basicallyiamfox.ani.core.rule.RuleDecorator
 import basicallyiamfox.ani.core.serializer.ISerializer
-import basicallyiamfox.ani.extensions.readStatModifier
-import basicallyiamfox.ani.extensions.writeStatModifier
+import basicallyiamfox.ani.extensions.*
 import basicallyiamfox.ani.interfaces.IPlayerEntity
-import basicallyiamfox.ani.json.addProperty
-import basicallyiamfox.ani.json.getIdentifier
-import basicallyiamfox.ani.json.getStatModifier
 import basicallyiamfox.ani.util.StatModifier
 import com.google.gson.JsonObject
 import net.minecraft.entity.damage.DamageType

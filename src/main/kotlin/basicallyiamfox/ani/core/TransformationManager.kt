@@ -1,9 +1,9 @@
 package basicallyiamfox.ani.core
 
 import basicallyiamfox.ani.core.serializer.ISerializer
+import basicallyiamfox.ani.extensions.addProperty
+import basicallyiamfox.ani.extensions.getIdentifier
 import basicallyiamfox.ani.extensions.toJsonArray
-import basicallyiamfox.ani.json.addProperty
-import basicallyiamfox.ani.json.getIdentifier
 import com.google.gson.JsonObject
 import net.minecraft.item.Item
 import net.minecraft.network.PacketByteBuf

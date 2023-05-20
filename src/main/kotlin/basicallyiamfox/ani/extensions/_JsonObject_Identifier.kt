@@ -1,4 +1,4 @@
-package basicallyiamfox.ani.json
+package basicallyiamfox.ani.extensions
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonSyntaxException

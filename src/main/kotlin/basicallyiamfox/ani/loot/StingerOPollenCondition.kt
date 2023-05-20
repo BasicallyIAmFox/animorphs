@@ -1,9 +1,9 @@
 package basicallyiamfox.ani.loot
 
 import basicallyiamfox.ani.decorator.rule.BeeflyRuleDecorator.BeeflyPlayerEntity
-import basicallyiamfox.ani.json.getDouble
-import basicallyiamfox.ani.json.getFloat
-import basicallyiamfox.ani.json.getInt
+import basicallyiamfox.ani.extensions.getDouble
+import basicallyiamfox.ani.extensions.getFloat
+import basicallyiamfox.ani.extensions.getInt
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonObject
 import com.google.gson.JsonSerializationContext

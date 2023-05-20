@@ -1,4 +1,4 @@
-package basicallyiamfox.ani.json
+package basicallyiamfox.ani.extensions
 
 import basicallyiamfox.ani.util.StatModifier
 import com.google.gson.JsonObject

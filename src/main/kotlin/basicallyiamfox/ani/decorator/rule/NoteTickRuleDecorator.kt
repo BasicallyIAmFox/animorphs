@@ -2,9 +2,9 @@ package basicallyiamfox.ani.decorator.rule
 
 import basicallyiamfox.ani.core.rule.RuleDecorator
 import basicallyiamfox.ani.core.serializer.ISerializer
-import basicallyiamfox.ani.json.addProperty
-import basicallyiamfox.ani.json.getIdentifier
-import basicallyiamfox.ani.json.getInt
+import basicallyiamfox.ani.extensions.addProperty
+import basicallyiamfox.ani.extensions.getIdentifier
+import basicallyiamfox.ani.extensions.getInt
 import com.google.gson.JsonObject
 import net.minecraft.block.enums.Instrument
 import net.minecraft.entity.player.PlayerEntity

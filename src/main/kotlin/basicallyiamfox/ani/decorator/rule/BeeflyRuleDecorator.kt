@@ -3,11 +3,7 @@ package basicallyiamfox.ani.decorator.rule
 import basicallyiamfox.ani.AnimorphsKeybindings
 import basicallyiamfox.ani.core.rule.RuleDecorator
 import basicallyiamfox.ani.core.serializer.ISerializer
-import basicallyiamfox.ani.extensions.isVisualActive
-import basicallyiamfox.ani.json.addProperty
-import basicallyiamfox.ani.json.getFloat
-import basicallyiamfox.ani.json.getIdentifier
-import basicallyiamfox.ani.json.getInt
+import basicallyiamfox.ani.extensions.*
 import basicallyiamfox.ani.mixin.IEntityMixin
 import com.google.gson.JsonObject
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking

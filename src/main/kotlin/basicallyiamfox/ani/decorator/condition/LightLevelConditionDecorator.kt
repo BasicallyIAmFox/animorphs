@@ -2,7 +2,10 @@ package basicallyiamfox.ani.decorator.condition
 
 import basicallyiamfox.ani.core.condition.ConditionDecorator
 import basicallyiamfox.ani.core.serializer.ISerializer
-import basicallyiamfox.ani.json.*
+import basicallyiamfox.ani.extensions.addProperty
+import basicallyiamfox.ani.extensions.getEnum
+import basicallyiamfox.ani.extensions.getIdentifier
+import basicallyiamfox.ani.extensions.getInt
 import basicallyiamfox.ani.util.ComparisonOperator
 import com.google.gson.JsonObject
 import net.minecraft.entity.player.PlayerEntity

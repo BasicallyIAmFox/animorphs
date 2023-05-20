@@ -1,6 +1,5 @@
-package basicallyiamfox.ani.json
+package basicallyiamfox.ani.extensions
 
-import basicallyiamfox.ani.extensions.enumValueOfOrNull
 import com.google.gson.JsonObject
 import com.google.gson.JsonSyntaxException
 

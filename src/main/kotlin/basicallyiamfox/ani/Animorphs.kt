@@ -6,9 +6,13 @@ import basicallyiamfox.ani.item.AnimorphsItems
 import basicallyiamfox.ani.loot.AniConditionTypes
 import basicallyiamfox.ani.loot.AniContextParameters
 import basicallyiamfox.ani.packet.Networking
+import com.mojang.logging.LogUtils
 import net.fabricmc.api.ModInitializer
 
 object Animorphs : ModInitializer {
+    @JvmField
+    val LOGGER = LogUtils.getLogger()
+
     override fun onInitialize() {
         RuleDecorators.init()
         ConditionDecorators.init()
