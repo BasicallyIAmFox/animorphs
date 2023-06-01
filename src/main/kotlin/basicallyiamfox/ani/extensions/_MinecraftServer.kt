@@ -8,9 +8,7 @@ import net.minecraft.server.MinecraftServer
 fun MinecraftServer.resourceManagerHolder(): MinecraftServer.ResourceManagerHolder {
     return (this as IMinecraftServerMixin).resourceManagerHolder
 }
-fun MinecraftServer.getTransformationLoader(): ServerTransformationLoader {
-    return resourceManagerHolder().dataPackContents.getTransformationLoader()
-}
-fun MinecraftServer.getAbilityLoader(): ServerAbilityLoader {
-    return resourceManagerHolder().dataPackContents.getAbilityLoader()
-}
+val MinecraftServer.transformationLoader: ServerTransformationLoader
+    get() = resourceManagerHolder().dataPackContents.transformationLoader
+val MinecraftServer.abilityLoader: ServerAbilityLoader
+    get() = resourceManagerHolder().dataPackContents.abilityLoader

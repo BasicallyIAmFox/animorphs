@@ -1,6 +1,6 @@
 package basicallyiamfox.ani.core.serializer
 
-import basicallyiamfox.ani.mixin.IRegistriesMixin
+import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Identifier
@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier
 class TypeSerializers {
     companion object {
         val key: RegistryKey<Registry<ISerializer<*>>> = RegistryKey.ofRegistry(Identifier("animorphs:type_serializer"))
-        val registry: Registry<ISerializer<*>> = IRegistriesMixin.invokeCreate(key) { null!! }
+        val registry: Registry<ISerializer<*>> = FabricRegistryBuilder.createSimple(key).buildAndRegister()
 
         @JvmStatic
         fun <T> getById(id: Identifier): ISerializer<T>? {

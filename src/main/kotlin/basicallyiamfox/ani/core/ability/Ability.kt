@@ -8,6 +8,8 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.network.PacketByteBuf
+import net.minecraft.text.Style
+import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
 import java.awt.Color
@@ -141,10 +143,10 @@ class Ability {
         }
     }
 
-    enum class Sign(val text: String, val colorHex: Int) {
-        POSITIVE("animorphs.ability_sign.animorphs.positive", Color(15, 190, 25).rgb),
-        NEUTRAL("animorphs.ability_sign.animorphs.neutral", Color(190, 190, 40).rgb),
-        NEGATIVE("animorphs.ability_sign.animorphs.negative", Color(190, 15, 25).rgb);
+    enum class Sign(val text: Text) {
+        POSITIVE(Text.translatable("animorphs.ability_sign.animorphs.positive").setStyle(Style.EMPTY.withColor(Color(15, 190, 25).rgb))),
+        NEUTRAL(Text.translatable("animorphs.ability_sign.animorphs.neutral").setStyle(Style.EMPTY.withColor(Color(190, 190, 40).rgb))),
+        NEGATIVE(Text.translatable("animorphs.ability_sign.animorphs.negative").setStyle(Style.EMPTY.withColor(Color(190, 15, 25).rgb)));
     }
 
     val conditions = arrayListOf<Condition>()

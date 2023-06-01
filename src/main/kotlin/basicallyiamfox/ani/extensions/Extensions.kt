@@ -4,9 +4,7 @@ import basicallyiamfox.ani.core.TransformationManager
 import basicallyiamfox.ani.core.ability.AbilityManager
 import basicallyiamfox.ani.packet.Networking
 
-fun getClientTransformationManager(): TransformationManager {
-    return Networking.ThisClassExistsOnClientOnly.instance.transformations!!
-}
-fun getClientAbilityManager(): AbilityManager {
-    return Networking.ThisClassExistsOnClientOnly.instance.abilities!!
-}
+val clientTransformationManager: TransformationManager
+    get() = Networking.ThisClassExistsOnClientOnly.instance.transformations!!
+val clientAbilityManager: AbilityManager
+    get() = Networking.ThisClassExistsOnClientOnly.instance.abilities!!

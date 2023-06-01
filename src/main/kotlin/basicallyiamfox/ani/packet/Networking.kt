@@ -5,8 +5,8 @@ import basicallyiamfox.ani.core.TransformationManager
 import basicallyiamfox.ani.core.ability.AbilityManager
 import basicallyiamfox.ani.decorator.rule.BeeflyRuleDecorator
 import basicallyiamfox.ani.decorator.rule.MagmaticJumpRuleDecorator
-import basicallyiamfox.ani.extensions.getAbilityLoader
-import basicallyiamfox.ani.extensions.getTransformationLoader
+import basicallyiamfox.ani.extensions.abilityLoader
+import basicallyiamfox.ani.extensions.transformationLoader
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents
@@ -77,12 +77,12 @@ object Networking {
 
     fun init() {
         ServerPlayConnectionEvents.JOIN.register { handler, _, server ->
-            val loader = server.getTransformationLoader().manager
+            val loader = server.transformationLoader.manager
             val packet = SendTransformationsPacket(loader!!)
             ServerPlayNetworking.send(handler.player, packet)
         }
         ServerPlayConnectionEvents.JOIN.register { handler, _, server ->
-            val loader = server.getAbilityLoader().manager
+            val loader = server.abilityLoader.manager
             val packet = SendAbilityPacket(loader!!)
             ServerPlayNetworking.send(handler.player, packet)
         }

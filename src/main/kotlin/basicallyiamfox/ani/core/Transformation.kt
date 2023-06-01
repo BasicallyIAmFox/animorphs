@@ -169,7 +169,7 @@ class Transformation {
 
     fun tick(world: World, player: PlayerEntity) {
         if (isActive(world, player)) {
-            abilities.map { player.getAbilityManager()!!.get(it) }.forEach {
+            abilities.map { player.abilityManager!!.get(it) }.forEach {
                 it?.tick(world, player)
             }
         }

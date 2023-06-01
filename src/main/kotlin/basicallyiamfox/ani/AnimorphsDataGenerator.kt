@@ -74,7 +74,7 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
     }
     class LangGenerator(output: FabricDataOutput) : FabricLanguageProvider(output, "en_us") {
         override fun generateTranslations(translationBuilder: TranslationBuilder?) {
-            translationBuilder!!.add(AnimorphsItems.GROUP, "Transformation items")
+            translationBuilder!!.add("itemGroup.animorphs.transformations_group", "Transformation items")
 
             translationBuilder.add(AnimorphsItems.STINGER_O_POLLEN, "Stinger o' Pollen")
             translationBuilder.addTransDesc(

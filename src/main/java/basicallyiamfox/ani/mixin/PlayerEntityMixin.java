@@ -53,18 +53,18 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerE
     private void animorphs$tickTransformation(CallbackInfo ci) {
         if (getActiveTransformation() == null) return;
 
-        _LivingEntityKt.getTransformationManager(this).get(getActiveTransformation()).tick(world, (PlayerEntity) (Object) this);
+        _LivingEntityKt.transformationManager(this).get(getActiveTransformation()).tick(getWorld(), (PlayerEntity) (Object) this);
     }
 
     @Inject(method = "isInvulnerableTo", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isInvulnerableTo(Lnet/minecraft/entity/damage/DamageSource;)Z"), cancellable = true)
     private void animorphs$isImmuneTo(DamageSource damageSource, CallbackInfoReturnable<Boolean> cir) {
-        if (damageTypesImmunities.containsKey(world.getRegistryManager().get(RegistryKeys.DAMAGE_TYPE).getId(damageSource.getType()))) {
+        if (damageTypesImmunities.containsKey(getWorld().getRegistryManager().get(RegistryKeys.DAMAGE_TYPE).getId(damageSource.getType()))) {
             cir.setReturnValue(true);
         }
     }
 
     private float animorphs$damageValue(float amount, DamageSource source) {
-        var id = world.getRegistryManager().get(RegistryKeys.DAMAGE_TYPE).getId(source.getType());
+        var id = getWorld().getRegistryManager().get(RegistryKeys.DAMAGE_TYPE).getId(source.getType());
         if (damageTypeModifiers.containsKey(id)) {
             return damageTypeModifiers.get(id).applyTo(amount);
         }

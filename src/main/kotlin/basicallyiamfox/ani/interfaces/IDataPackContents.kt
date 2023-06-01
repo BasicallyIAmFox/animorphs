@@ -4,6 +4,6 @@ import basicallyiamfox.ani.core.ServerTransformationLoader
 import basicallyiamfox.ani.core.ability.ServerAbilityLoader
 
 interface IDataPackContents {
-    fun getServerTransformationLoader(): ServerTransformationLoader
-    fun getServerAbilityLoader(): ServerAbilityLoader
+    val serverTransformationLoader: ServerTransformationLoader
+    val serverAbilityLoader: ServerAbilityLoader
 }

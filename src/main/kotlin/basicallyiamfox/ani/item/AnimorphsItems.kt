@@ -7,6 +7,7 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 
 object AnimorphsItems {
@@ -14,7 +15,8 @@ object AnimorphsItems {
     private val ITEMS = LinkedHashMap<Identifier, Item>()
 
     @JvmField
-    val GROUP: ItemGroup = FabricItemGroup.builder(Identifier("animorphs", "transformations_group"))
+    val GROUP: ItemGroup = FabricItemGroup.builder()
+        .displayName(Text.translatable("itemGroup.animorphs.transformations_group"))
         .icon { ItemStack(STINGER_O_POLLEN) }
         .entries { _, entries ->
             entries.add(STINGER_O_POLLEN)

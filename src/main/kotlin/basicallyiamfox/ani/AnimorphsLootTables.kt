@@ -25,7 +25,7 @@ object AnimorphsLootTables {
                 return@register;
 
             if (MAGMA_CUBE_LOOT_TABLE_ID.equals(id)) {
-                lootManager.getTable(AniLootTableIds.MAGMA_JELLY).pools.forEach {
+                lootManager.getLootTable(AniLootTableIds.MAGMA_JELLY).pools.forEach {
                     tableBuilder.pool(it).modifyPools { e ->
                         e.conditionally(killedByFrog())
                     }

@@ -1,7 +1,7 @@
 package basicallyiamfox.ani.cache.item
 
 import basicallyiamfox.ani.core.Transformation
-import basicallyiamfox.ani.extensions.getClientAbilityManager
+import basicallyiamfox.ani.extensions.clientAbilityManager
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.item.Item
@@ -16,6 +16,7 @@ import java.awt.Color
 class TooltipCache {
     companion object {
         private val emptyWhite = Style.EMPTY.withColor(Color.WHITE.rgb)
+        private val emptySpace = Text.literal(" ")
         private const val isVisualActiveKey = "animorphs.tooltip.animorphs.is_visual_active"
 
         @JvmStatic
@@ -52,7 +53,7 @@ class TooltipCache {
                 val list = arrayListOf<Text>()
                 for (a in transformation.abilities) {
                     var text = Text.literal("* ").setStyle(emptyWhite)
-                    val ability = getClientAbilityManager().get(a)
+                    val ability = clientAbilityManager.get(a)
                     if (ability == null) {
                         list.add(text.append(Text.literal("Unable to load ability: ").append(Text.translatable(a.toTranslationKey()))))
                         continue
@@ -60,19 +61,11 @@ class TooltipCache {
 
                     if (!ability.visible) continue
 
-                    text = text.append(
-                        (Text.translatable(ability.sign.text).append(Text.literal(" ")))
-                            .setStyle(Style.EMPTY.withColor(ability.sign.colorHex))
-                    )
-
+                    text = text.append(ability.sign.text.copy().append(emptySpace))
                     text = text.append(Text.translatable(ability.name).setStyle(Style.EMPTY.withColor(ability.colorHex)))
                     list.add(text)
 
-                    if (ability.desc == null) {
-                        continue
-                    }
-
-                    ability.desc!!.forEach { e ->
+                    ability.desc?.forEach { e ->
                         list.add(Text.literal("    ").append(Text.translatable(e)))
                     }
                 }

@@ -9,7 +9,7 @@ object AniCodecs {
     inline fun <reified E : Enum<E>> enumCodec(): Codec<E> {
         return Codec.STRING.comapFlatMap({ id ->
             val e = enumValueOfOrNull<E>(id)
-            if (e == null) {
+            if (e != null) {
                 return@comapFlatMap DataResult.success(e)
             }
             return@comapFlatMap DataResult.error { "Not a valid enum value." }

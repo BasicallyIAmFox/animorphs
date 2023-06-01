@@ -12,6 +12,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
@@ -20,6 +21,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+
+import java.util.HashMap;
 
 @Mixin(BeehiveBlock.class)
 public abstract class BeehiveBlockMixin extends BlockWithEntity {
@@ -39,10 +42,10 @@ public abstract class BeehiveBlockMixin extends BlockWithEntity {
                                               BlockHitResult hit) {
         var duck = (BeeflyRuleDecorator.BeeflyPlayerEntity)player;
         if (player.getServer() != null) {
-            var table = player.getServer().getLootManager().getTable(AniLootTableIds.STINGER_O_POLLEN)
+            var table = player.getServer().getLootManager().getLootTable(AniLootTableIds.STINGER_O_POLLEN)
                     .generateLoot(
-                            new LootContext.Builder((ServerWorld) world)
-                                    .parameter(AniContextParameters.THIS_PLAYER, player)
+                            new LootContextParameterSet.Builder((ServerWorld) world)
+                                    .addOptional(AniContextParameters.THIS_PLAYER, player)
                                     .build(LootContextTypes.EMPTY)
                     );
             if (table.size() > 0) {

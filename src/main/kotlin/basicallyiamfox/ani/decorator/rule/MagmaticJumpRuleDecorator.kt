@@ -163,7 +163,7 @@ class MagmaticJumpRuleDecorator() : RuleDecorator() {
             return
         }
 
-        if (!AnimorphsKeybindings.magmaJumpKeyBinding!!.isPressed || duck.magmaTick > 0 && player.isMoving()) {
+        if (!AnimorphsKeybindings.magmaJumpKeyBinding!!.isPressed || duck.magmaTick > 0 && player.moving) {
             if (duck.magmaTick >= ready) {
                 jump(player, duck.magmaScale)
                 ClientPlayNetworking.send(JumpPacket(duck.magmaScale))
@@ -218,7 +218,7 @@ class MagmaticJumpRuleDecorator() : RuleDecorator() {
             }
         }
 
-        if (duck.magmaDamage > 0.0f && !player.isMoving() && !player.isSpectator) {
+        if (duck.magmaDamage > 0.0f && !player.moving && !player.isSpectator) {
             damage(player)
 
             duck.magmaDamage = 0.0f
