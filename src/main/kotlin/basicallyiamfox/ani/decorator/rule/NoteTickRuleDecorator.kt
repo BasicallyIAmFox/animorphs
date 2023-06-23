@@ -6,6 +6,7 @@ import basicallyiamfox.ani.extensions.addProperty
 import basicallyiamfox.ani.extensions.getIdentifier
 import basicallyiamfox.ani.extensions.getInt
 import com.google.gson.JsonObject
+import net.minecraft.block.NoteBlock
 import net.minecraft.block.enums.Instrument
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.network.PacketByteBuf
@@ -16,7 +17,10 @@ import net.minecraft.util.math.MathHelper
 import net.minecraft.world.World
 import org.apache.commons.lang3.math.Fraction
 import java.awt.Color
-import kotlin.math.*
+import kotlin.math.abs
+import kotlin.math.ceil
+import kotlin.math.roundToInt
+import kotlin.math.sin
 
 class NoteTickRuleDecorator() : RuleDecorator() {
     object Serializer : ISerializer<NoteTickRuleDecorator> {
@@ -77,8 +81,8 @@ class NoteTickRuleDecorator() : RuleDecorator() {
 
         while (duck.noteTick >= playEveryTick) {
             val currentType: Int = duck.noteType
-            val pitch = 2.0.pow((currentType - 12) / 12.0).toFloat()
-            val instrument: Instrument = Instrument.fromBelowState(world.getBlockState(player.blockPos.down()))
+            val pitch = NoteBlock.getNotePitch(currentType)
+            val instrument: Instrument = world.getBlockState(player.blockPos.down()).instrument
             world.playSound(null, player.blockPos.up(), instrument.sound.value(), SoundCategory.RECORDS, 3f, pitch)
 
             world.addParticle(

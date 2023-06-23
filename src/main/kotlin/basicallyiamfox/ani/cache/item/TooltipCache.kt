@@ -13,72 +13,70 @@ import net.minecraft.util.Identifier
 import java.awt.Color
 
 @Environment(EnvType.CLIENT)
-class TooltipCache {
-    companion object {
-        private val emptyWhite = Style.EMPTY.withColor(Color.WHITE.rgb)
-        private val emptySpace = Text.literal(" ")
-        private const val isVisualActiveKey = "animorphs.tooltip.animorphs.is_visual_active"
+object TooltipCache {
+    private val emptyWhite = Style.EMPTY.withColor(Color.WHITE.rgb)
+    private val emptySpace = Text.literal(" ")
+    private const val isVisualActiveKey = "animorphs.tooltip.animorphs.is_visual_active"
 
-        @JvmStatic
-        val isVisualActiveOn: Text = Text.translatable(isVisualActiveKey).append(" ").append(Text.translatable("options.on").formatted(Formatting.GREEN))
-        @JvmStatic
-        val isVisualActiveOff: Text = Text.translatable(isVisualActiveKey).append(" ").append(Text.translatable("options.off").formatted(Formatting.RED))
+    @JvmStatic
+    val isVisualActiveOn: Text = Text.translatable(isVisualActiveKey).append(" ").append(Text.translatable("options.on").formatted(Formatting.GREEN))
+    @JvmStatic
+    val isVisualActiveOff: Text = Text.translatable(isVisualActiveKey).append(" ").append(Text.translatable("options.off").formatted(Formatting.RED))
 
-        @JvmStatic
-        val desc = hashMapOf<Identifier, List<Text>>()
-        @JvmStatic
-        val lines = hashMapOf<Identifier, List<Text>>()
+    @JvmStatic
+    val desc = hashMapOf<Identifier, List<Text>>()
+    @JvmStatic
+    val lines = hashMapOf<Identifier, List<Text>>()
 
-        @JvmStatic
-        fun loadDescForItem(item: Item, transformation: Transformation): List<Text> {
-            var descList = desc[Registries.ITEM.getId(item)]
-            if (descList == null) {
-                val list = arrayListOf<Text>()
+    @JvmStatic
+    fun loadDescForItem(item: Item, transformation: Transformation): List<Text> {
+        var descList = desc[Registries.ITEM.getId(item)]
+        if (descList == null) {
+            val list = arrayListOf<Text>()
 
-                if (!transformation.desc.isNullOrEmpty()) {
-                    transformation.desc!!.forEach {
-                        list.add(Text.translatable(it))
-                    }
+            if (!transformation.desc.isNullOrEmpty()) {
+                transformation.desc!!.forEach {
+                    list.add(Text.translatable(it))
+                }
+            }
+
+            desc[Registries.ITEM.getId(item)] = list
+            descList = list
+        }
+        return descList
+    }
+    @JvmStatic
+    fun loadForItem(item: Item, transformation: Transformation): List<Text> {
+        var linesList = lines[Registries.ITEM.getId(item)]
+        if (linesList == null) {
+            val list = arrayListOf<Text>()
+            for (a in transformation.abilities) {
+                var text = Text.literal("* ").setStyle(emptyWhite)
+                val ability = clientAbilityManager.get(a)
+                if (ability == null) {
+                    list.add(text.append(Text.literal("Unable to load ability: ").append(Text.translatable(a.toTranslationKey()))))
+                    continue
                 }
 
-                desc[Registries.ITEM.getId(item)] = list
-                descList = list
-            }
-            return descList
-        }
-        @JvmStatic
-        fun loadForItem(item: Item, transformation: Transformation): List<Text> {
-            var linesList = lines[Registries.ITEM.getId(item)]
-            if (linesList == null) {
-                val list = arrayListOf<Text>()
-                for (a in transformation.abilities) {
-                    var text = Text.literal("* ").setStyle(emptyWhite)
-                    val ability = clientAbilityManager.get(a)
-                    if (ability == null) {
-                        list.add(text.append(Text.literal("Unable to load ability: ").append(Text.translatable(a.toTranslationKey()))))
-                        continue
-                    }
+                if (!ability.visible) continue
 
-                    if (!ability.visible) continue
+                text = text.append(ability.sign.text.copy().append(emptySpace))
+                text = text.append(Text.translatable(ability.name).setStyle(Style.EMPTY.withColor(ability.colorHex)))
+                list.add(text)
 
-                    text = text.append(ability.sign.text.copy().append(emptySpace))
-                    text = text.append(Text.translatable(ability.name).setStyle(Style.EMPTY.withColor(ability.colorHex)))
-                    list.add(text)
-
-                    ability.desc?.forEach { e ->
-                        list.add(Text.literal("    ").append(Text.translatable(e)))
-                    }
+                ability.desc?.forEach { e ->
+                    list.add(Text.literal("    ").append(Text.translatable(e)))
                 }
-
-                linesList = list
-                lines[Registries.ITEM.getId(item)] = list
             }
-            return linesList
-        }
 
-        fun clear() {
-            desc.clear()
-            lines.clear()
+            linesList = list
+            lines[Registries.ITEM.getId(item)] = list
         }
+        return linesList
+    }
+
+    fun clear() {
+        desc.clear()
+        lines.clear()
     }
 }

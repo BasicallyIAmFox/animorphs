@@ -36,6 +36,7 @@ object AnimorphsItems {
         for ((key, value) in ITEMS) {
             Registry.register(Registries.ITEM, key, value)
         }
+        Registry.register(Registries.ITEM_GROUP, Identifier("animorphs", "transformations_group"), GROUP)
     }
 
     private fun <I : Item> add(name: String, item: I): I {

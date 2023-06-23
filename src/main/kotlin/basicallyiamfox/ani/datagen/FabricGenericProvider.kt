@@ -19,7 +19,7 @@ abstract class FabricGenericProvider<T>(directoryName: String, output: FabricDat
         pathResolver = output.getResolver(DataOutput.OutputType.DATA_PACK, directoryName)
     }
 
-    abstract fun generateTypes(consumer: Consumer<T?>?)
+    protected abstract fun generateTypes(consumer: Consumer<T?>?)
 
     override fun run(writer: DataWriter?): CompletableFuture<*> {
         val identifiers: MutableSet<Identifier> = Sets.newHashSet()
@@ -41,7 +41,7 @@ abstract class FabricGenericProvider<T>(directoryName: String, output: FabricDat
         return pathResolver!!.resolveJson(getId(type))
     }
 
-    abstract fun getId(type: T): Identifier
-    abstract fun toJson(type: T): JsonObject
+    protected abstract fun getId(type: T): Identifier
+    protected abstract fun toJson(type: T): JsonObject
     abstract override fun getName(): String?
 }

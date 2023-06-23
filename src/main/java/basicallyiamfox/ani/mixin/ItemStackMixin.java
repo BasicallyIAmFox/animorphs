@@ -133,7 +133,7 @@ public abstract class ItemStackMixin {
 
     @Inject(method = "use", at = @At(value = "HEAD"))
     private void animorphs$switchVisualActiveKey(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
-        if (!world.isClient || !_LivingEntityKt.transformationManager(user).getTypeByItemId().containsKey(Registries.ITEM.getId(getItem())))
+        if (!world.isClient || !_LivingEntityKt.getTransformationManager(user).getTypeByItemId().containsKey(Registries.ITEM.getId(getItem())))
             return;
 
         user.getStackInHand(hand).getOrCreateNbt().putBoolean(
@@ -145,7 +145,7 @@ public abstract class ItemStackMixin {
     @Inject(method = "inventoryTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/Item;inventoryTick(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Lnet/minecraft/entity/Entity;IZ)V"))
     private void animorphs$addVisualActiveKeyAndSetActiveTransformation(World world, Entity entity, int slot, boolean selected, CallbackInfo ci) {
         if (entity instanceof PlayerEntity) {
-            var manager = _LivingEntityKt.transformationManager((PlayerEntity)entity);
+            var manager = _LivingEntityKt.getTransformationManager((PlayerEntity)entity);
             if (manager == null) return;
 
             var trans = manager.get(getItem());

@@ -7,6 +7,7 @@
     "DataPackContentsMixin",
     "IEntityMixin",
     "ILivingEntityMixin",
+    "IMinecraftServerMixin",
     "PlayerEntityMixin",
     "decorator.rule.BeeflyPlayerEntityMixin",
     "decorator.rule.MagmaticJumpPlayerEntityMixin",
@@ -18,9 +19,6 @@
     "AbstractClientPlayerEntityMixin",
     "ItemStackMixin",
     "decorator.rule.MagmaticJumpPlayerEntityRendererMixin"
-  ],
-  "server": [
-    "IMinecraftServerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

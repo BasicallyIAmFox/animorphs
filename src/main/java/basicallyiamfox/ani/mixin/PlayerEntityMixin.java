@@ -53,7 +53,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerE
     private void animorphs$tickTransformation(CallbackInfo ci) {
         if (getActiveTransformation() == null) return;
 
-        _LivingEntityKt.transformationManager(this).get(getActiveTransformation()).tick(getWorld(), (PlayerEntity) (Object) this);
+        _LivingEntityKt.getTransformationManager(this).get(getActiveTransformation()).tick(getWorld(), (PlayerEntity) (Object) this);
     }
 
     @Inject(method = "isInvulnerableTo", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isInvulnerableTo(Lnet/minecraft/entity/damage/DamageSource;)Z"), cancellable = true)

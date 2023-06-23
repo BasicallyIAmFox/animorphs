@@ -4,6 +4,8 @@ import basicallyiamfox.ani.core.Transformation
 import basicallyiamfox.ani.core.ability.Ability
 import basicallyiamfox.ani.core.condition.Condition
 import basicallyiamfox.ani.core.rule.Rule
+import basicallyiamfox.ani.datagen.AnimorphsAbilityProvider
+import basicallyiamfox.ani.datagen.AnimorphsTransformationProvider
 import basicallyiamfox.ani.datagen.FabricGenericProvider
 import basicallyiamfox.ani.decorator.condition.*
 import basicallyiamfox.ani.decorator.rule.*
@@ -139,9 +141,9 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
             translationBuilder.add("key.animorphs.magma_jump", "Magmatic Jump ability")
         }
     }
-    class TransformationGenerator(output: FabricDataOutput) : FabricGenericProvider<Transformation>("animorphs/transformations", output) {
-        override fun generateTypes(consumer: Consumer<Transformation?>?) {
-            Consumer<Consumer<Transformation?>?> { t ->
+    class TransformationGenerator(output: FabricDataOutput) : AnimorphsTransformationProvider(output) {
+        override fun generateTransformations(consumer: Consumer<Transformation?>) {
+            Consumer<Consumer<Transformation?>> { t ->
                 t.accept(Transformation()
                     .setColor(Color(238, 196, 65).rgb)
                     .setId(Identifier("animorphs:bee"))
@@ -224,20 +226,10 @@ class AnimorphsDataGenerator : DataGeneratorEntrypoint {
 
             }.accept(consumer)
         }
-
-        override fun getId(type: Transformation): Identifier = type.id
-
-        override fun toJson(type: Transformation): JsonObject {
-            val obj = JsonObject()
-            Transformation.Serializer.toJson(obj, type)
-            return obj
-        }
-
-        override fun getName(): String = "Animorphs/Transformations"
     }
-    class AbilityGenerator(output: FabricDataOutput) : FabricGenericProvider<Ability>("animorphs/abilities", output) {
-        override fun generateTypes(consumer: Consumer<Ability?>?) {
-            Consumer<Consumer<Ability?>?> { t ->
+    class AbilityGenerator(output: FabricDataOutput) : AnimorphsAbilityProvider(output) {
+        override fun generateAbilities(consumer: Consumer<Ability?>) {
+            Consumer<Consumer<Ability?>> { t ->
                 t.accept(
                     Ability()
                     .setId(Identifier("animorphs:beefly"))
